@@ -1,0 +1,2602 @@
+Hi gpt, 
+You are an expert for build an agent ok
+dekh mujhe ek Atomation karna h jisme mujhe ek agent build karna h project ke liye Jha mujhe data ko kafka se lH raw DB me dalna h but mri requiremt kya h kya h and flow kya h ye dekh -
+dekh mene puri information apni repo me dal di h vs code ki jo bhi information lagan h bulid karne ke liye ok to 
+and mera end to end flow ye h -
+
+meri repo - mif-ingest-to-lakehouse-infra-dev_v2 --> source of truth hoga 
+meri md file - mif-glue-job-creation-terraform-script-process
+project_information --> es folder ke ander project se related har ek information h cell1 to cell8
+.env --> ye file mene Pehle se project me dali hui h apne side se 
+
+me ye chahta hu - 
+GitHub repo navigate karega
+Existing files edit karega
+New Glue Jobs create karega
+Session maintain karega
+Multiple changes queue karega
+Last moment tak edits allow karega
+PR raise karne se pehle validate karega
+
+┌─────────────────────┐
+│ React Vite Frontend │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Session Manager     │
+│ (ChatGPT Style)     │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Master Agent        │
+│ (Intent Router)     │
+└───────┬─────┬───────┘
+        │     │
+        │     │
+        ▼     ▼
+
+ Existing      New Glue Job
+ Change        Creation
+
+ Flow          Flow
+
+
+mujhe kya kya chahiye h project me -->
+GitHub OAuth
+    ↓
+Session Manager
+    ↓
+Chat Interface
+    ↓
+Env Selection
+    ↓
+Operation Selection
+    ↓
+File Change Flow
+         OR
+Glue Job Creation Flow
+    ↓
+Draft Workspace
+    ↓
+Review Workspace
+    ↓
+Terraform Validation
+    ↓
+One PR One Commit
+    ↓
+Session Saved
+
+mera flow -->
+
+1. Environment
+   dev / prod
+
+2. Source System
+   Dropdown from repository
+
+   + Allow:
+     "Add New Source System"
+
+   Source systems dynamically read from:
+   mif-ingest-to-lakehouse-infra-dev_v2
+   Examples:
+   saptcc
+   saptce
+   saptpp
+   etc.
+
+3. Schema Grain
+   Free Text
+
+   User enters:
+   multi-1
+
+   Agent derives:
+   dev.saptcc.multi-1.raw
+
+4. Repository Validation
+
+   Check:
+   confluent_minerva_dev/topics_saptcc.tf
+
+   If schema_grain exists:
+      PASS
+
+   If schema_grain not found:
+      HARD BLOCK
+      "Please create topic first"
+
+5. Duplicate Glue Job Validation
+
+   Before creating Glue Job:
+
+   Check:
+   mif-ingest-to-lakehouse-infra-dev/saptcc/locals.tf
+
+   Derived Glue Job Name already exists?
+
+   YES:
+      HARD BLOCK
+      "Glue Job already exists"
+
+   NO:
+      Continue
+
+6. Knowledge Base Derivation
+
+   Auto derive:
+
+   Kafka Secret Name
+   Glue Job Name
+   IAM Role
+   Worker Type
+   Glue Version
+   Workers
+   Schedule (Default Daily 1 AM)
+   Job Type
+   Job Version
+   LH DB
+   S3 Paths
+
+7. Review Screen
+
+   Everything editable
+
+   Kafka Secret Name
+   Glue Job Name
+   IAM Role
+   Worker Type
+   Glue Version
+   Workers
+   Schedule
+   Enterprise Function
+   Subgroup
+   LH DB
+   S3 Paths
+   Commit Message
+   PR Title
+   PR Description
+
+8. Terraform Validation
+
+9. Create PR
+
+
+
+I want this - 1. State Integration
+2. Draft Workspace Integration
+3. Topic Validation Flow
+4. One PR One Commit
+5. Conflict Resolution
+6. React UI
+7. Session History
+8. GitHub OAuth
+Database phase 
+Conflict resolution 
+PR creation 
+
+
+4. Schedule (English text) - ese hame starting me nhi puchhna h sab ham pr raised karne ke pehle sab kuchh ek bar user ko dikhayege na bha per per eski value ko ham by default rakege(Daily 1 pm) kuchh ok orr yadi user want to change then he can chage like bo english me bhar sakta h bha per but es question ko nhi puchhna h mere ko ok 
+jab user en tin chijo ko dalega - env, system, schema_grain
+Keval or keval ye value atogenrate hogi orr keval or keval user ko ye dikhegi value ok
+Atogenrated value ---> 
+topic name
+Kafka Topic  --> ye genrate nhi hoga keval check hoga ki topic name jo bana h like (dev.saptcc.multi-1.raw) ye kafka me h ya nhi h bas
+kafka Secret Name --> editable 
+Glue Job Name --> editable
+IAM Role --> editable
+Worker Type--> editable
+Glue Version*--> editable
+Workers--> editable
+Scheduling mode--> editable
+job type --> editable
+job version--> editable
+Enterprise Function (file-level) - give in drop down (AGTR/FOOD/CORP) --> editable
+subgroup - (give in drop down - APAC/NA/LATAM)--> editable
+LH DB--> editable
+S3 Paths--> editable
+Validation Rules --> not show the use run these rolese in the backed
+Commit Message--> editable
+PR Title--> editable
+PR Description--> editable
+Schema Registry Values --> no need to show the user
+    Above sab informaton knowlege base se drived hogi jo ki or knowbase ko khud ko project_information floder ke ander jo cells h usse traind karna hoga 
+
+Enterprise Function and subgroup  --> ye dono chijo ko user drop down se select kar sakta h but yadi bo nya dalna chahta h to bo bhi dal sakta h or phir agent us value ke hisab se glue job ko banayega 
+last stage me bhi yadi user bolta h agent ko change the thing path ya anything only before raising the pr agent need to give the authority to this to the user 
+
+ui me user interacation changed - normal conversation -- like the gpt 
+git hub ka aouth salna h  -> user ki session store karne -> session ki history manged karna chatgpt ke jese kal ka session aaj ka 
+git aouth + session wise
+daynamic bana h everthing sabhi kuchh ko
+ek chij ko dekhna ke bad dubara mat dikhao confirmation
+{env}.{source_system}.{schema_grain}.raw -> puchho then autogenrate the topic name
+cron(0 1 * * ? *) --> ye agent generate karega keval user se English me puchhega kab chalana h glue job in English me user enter karega then cron job agent develop karega
+3 to 10 aak the previous step ek sath dikhana h orr keval ek confirmation ke bad raised the pr 
+each node one work --> only 
+react vite frontendd
+collection 
+
+mujeh ab apna currect flow ye rakhna h dekh tu ->
+jese hi user ne chatbot open kiya
+Agent - in which env you want to work - dev ya prod
+user - will chose dev ya prod me se ek koi then 
+agent - 
+op1 = you want to change the adgisting file ya
+op2 = you create the glue job for the new system
+
+if user chose option1 then -
+agent will ask the user --> konsa folder ke ander changes karne h 
+jese hi user folder ko likhega(saptcc) us folder ke and jitne bhi folder hoge ya fils hogi agent unke dikahta jayega or puchhta jayega want to go inside or jab user target tak pahuch jayega to user us file ho change karne ke liye capable hoga and 
+agent will again ask -> want to change the ander folder if user chose the yes -> then phir agent folder and files ke ander jata jayega or jab last me user user no karega(no want to change the folder) _> agent validate the change and raised the PR(after only allow when allow the user)
+
+
+if user choose the option 2 : then agent ask --
+agent first question -->   
+jdbc se  ya --> ek specifice node esko handle karne ke liye hoga
+kafka se --> ek specifice node esko handle karne ke liye hoga
+flat files se --> ek specifice node esko handle karne ke liye hoga
+ya api se --> ek specifice node esko handle karne ke liye hoga
+if use chose kafaka se --> 
+agent provide the source system name(show some source system name in drop down), me mif repo ko github me dekhkar 
+rovide the schema.grain in(show some drop down) 
+and then agent atomaticall create the topic and show to the user in this format like - dev.saptcc.multi-1.raw
+
+        |
+        v
+Kafka Topic Exists ?
+        |
+check in the confluent_minerva_dev/
+        |
+        +---- not found
+        |          |
+        |          v
+        |     hard block
+        |
+        +---- found
+                   |
+                   v
+             continue (confluent_minerva_dev/topics_saptcc.tf me jake multi-1 ko serch karega if present then continue otherwise hard block)
+if user give the info - dev.saptcc.multi-1.raw --> then agent will check in the confluent_minerva_dev/topics_saptcc.tf file if present then continue otherwise hard block
+if user give the info - dev.saptce.multi-1.raw --> then agent will check in the confluent_minerva_dev/topics_saptce.tf file if present then continue otherwise hard block................ same for all 
+
+eske check karne ke bad sab kuchh agent apne knowledge base ke basis per information de dega user ko and if user want to change he can edit 
+yadi user chhose jdbc se h --> abhi ek liye keval node hogi orr agent show kar dega - need to implement
+yadi user chhose flat filese se h --> --> abhi ek liye keval node hogi orr agent show kar dega - need to implement
+yadi user chose api se jdbc se h --> --> abhi ek liye keval node hogi orr agent show kar dega - need to implement
+
+agent ask - you want to user raised the PR ya need to create the another glue job (jab user ek glue job create kar lega uske bad hi ye option aayega need to create another glue job nhi to fiurst option me edit file ya create the glue job hi aayega)
+
+if user chose pr creation -> validate by the agent and then raised the pr
+if user chose another file change ya create the another glue job give him the authority to do this with the same above flow 
+last scope me bhi yadi user bola h agent ko change the thing path ya anything only befor raigin the pr agent neet to give the authority to this to the user
+ui me user interacation changed - normal conversation --> i do not wind the users 
+git hub ka aouth salna h  -> user ki session store karne -> session ki history manged karna chatgpt ke jese kal ka session aaj ka 
+git aouth + session wise
+developed the best ui throught the - react vite frontend
+daynamic bana h everthing sabhi kuchh ko
+do not take the confirmation again and again just take the info - env, system and schema grain the knowledge base ke basis per sab kuchh agent dikha dega user ko just ek confirmation ke bad pr raised yadi and everthing editiable hoga and user last stepm me aake bhi say taht i want to change this thing
+outon generate karo naming conventions -0 dev.saptcc.multi-1.raw
+{env}.{source_system}.{schema_grain}.raw -> puchho then autogenrate the topic name
+
+
+each node one work --> only 
+most important ---> ** me user se start me hi nhi puchhna chahta hu kitni glue job create karna h bo ek create kerne ke bad agent phir puchhega you want to create the another one ??
+***saptcc/locals.tf and saptcc/glue.tf *** -> path yahi hoga creation ka 
+
+glue job crewate karne ke liye rule -
+yadi mif repo me source system pehle se present h to agent ko agent ye create karega - saptcc/locals.tf 
+yadi mif repo ke ander source system pehle se nhi h jo use ne enter kiya h to agent ko agent ye create karega - saptcc/locals.tf and saptcc/glue.tf
+
+
+saptcc/locals.tf and saptcc/glue.tf --> enka format pehle hi mif repo me and md file me project_infrmation ke ander likha hua h 
+
+required -> 
+Redis 
+LangGraph 
+Agent 
+Hexagonal
+multipile glue job at a time 
+adgisting file green se dikhegi user ko and delete karne per red
+yadi conflicts aate h to use force push kar sakta h 
+
+
+change the file you want ya new job created and you want to create the new job also
+                ==> which folder --> give thority to change and raise PR.........            
+                    ┌─────────────────┐
+
+                    │   GitHub OAuth  │
+
+                    └────────┬────────┘
+
+                             │
+
+                             ▼
+ 
+                    ┌─────────────────┐
+
+                    │ Session Manager │
+
+                    └────────┬────────┘
+
+                             │
+
+                             ▼
+ 
+                    ┌─────────────────┐
+
+                    │ Chat Interface  │
+
+                    └────────┬────────┘
+
+                             │
+
+                             ▼
+ 
+                  ENV SELECTION NODE
+
+                       dev / prod
+
+                             │
+
+                             ▼
+ 
+                  OPERATION NODE
+
+          ┌─────────────────────────┐
+
+          │                         │
+
+          ▼                         ▼
+ 
+    MODIFY FILE FLOW         CREATE GLUE JOB FLOW
+ 
+          │                         │
+
+          │                         ▼
+
+          │               SOURCE TYPE NODE
+
+          │
+
+          │         ┌──────┬──────┬──────┬──────┐
+
+          │         ▼      ▼      ▼      ▼
+
+          │       Kafka   JDBC   Flat   API
+
+          │                     File
+
+          │
+
+          │               Kafka Flow Only
+
+          │
+
+          │                     ▼
+
+          │          Source System Dropdown
+
+          │
+
+          │                     ▼
+
+          │            Schema Grain (Ye dropdown me nhi dikhege esko user enter karega)
+
+          │
+
+          │                     ▼
+
+          │       Topic Auto Generate
+
+          │
+
+          │    dev.saptcc.multi-1.raw
+
+          │
+
+          │                     ▼
+
+          │      Repository Topic Validation
+
+          │
+
+          │   confluent_minerva_dev/topics-source_system.tf
+
+          │
+
+          │                     ▼
+
+          │          Topic Exists ?
+
+          │
+
+          │             YES(if topics exist then agent will go to the mif repo and check the source system folder and check inside the folder multi-1 is already present or not if present then agent will say (glue job already presnt) else agnet can continue to create the glue job)
+
+          │              │
+
+          │              ▼
+
+          │      Knowledge Base Service 
+
+          │
+
+          │   Auto Derive Everything
+
+          │
+
+          │   IAM Role
+
+          │   Glue Version
+
+          │   Workers
+
+          │   LH DB
+
+          │   S3 Path
+
+          │   Worker Type
+
+          │   Secret Name
+
+          │   Job Name
+
+          │
+
+          │              ▼
+
+          │       Draft Workspace
+
+          │
+
+          ▼              ▼
+ 
+Repository Navigator      ChangeSet Manager
+ 
+          │                     │
+
+          └──────────┬──────────┘
+
+                     │
+
+                     ▼
+ 
+             Review Workspace
+ 
+     Everything Editable Here
+ 
+     Files
+
+     Glue Jobs
+
+     Commit Message
+
+     PR Title
+
+     PR Description
+ 
+                     │
+
+                     ▼
+ 
+        Terraform Validation Node
+ 
+        terraform init
+
+        terraform fmt
+
+        terraform validate
+ 
+                     │
+
+             PASS / FAIL
+ 
+                     ▼
+ 
+             Final Confirmation
+ 
+                     ▼
+ 
+               Create PR
+ 
+             One Commit Only
+ 
+                     ▼
+ 
+               Session Saved
+ 
+topic derived
+
+      |
+
+      v
+
+check in confluent_minerva_dev
+
+      |
+
+      +---- not found
+
+      |          |
+
+      |          v
+
+      |     hard block
+
+      |
+
+      +---- found
+
+                 |
+
+                 v
+
+           continue
+
+*********************************************************
+One langraph one -- used only and only for one work this is must for the project
+*********************************************************
+
+Must requirements =====>
+Session management
+GitHub OAuth
+Draft workspace
+session management 
+UI flow
+LangGraph state 
+GitHub auth 
+multi-change draft workspace support
+1 single PR --> for all of the commit in the single session
+
+Main Goals  =====> 
+Minimum Questions
+Maximum Automation
+Single Confirmation Before PR
+Editable Until PR
+ChatGPT Style Experience
+Session History
+Github Auth
+Knowledge Base Driven
+
+
+Supported Operations
+1. Modify Existing Files
+2. Create Glue Job
+   - Kafka
+   - JDBC
+   - Flat File
+   - API
+3. Multiple Changes In Same Session
+4. Raise PR
+
+
+Non Goals
+Direct Merge
+Auto Apply
+Production Deployment
+UX Wireframe
+
+Before coding.
+Need pages:
+Login
+Chat
+Workspace
+PR Review
+History
+Layout:
+┌────────────┬──────────────────┬─────────────┐
+│ Sessions   │ Chat             │ Workspace   │
+│            │                  │             │
+└────────────┴──────────────────┴─────────────┘
+Exactly GPT style.
+start
+↓
+environment
+↓
+operation
+↓
+router
+├─ modify_flow
+├─ kafka_flow
+├─ jdbc_flow
+├─ flatfile_flow
+└─ api_flow
+↓
+draft_workspace
+↓
+review
+↓
+terraform_validation
+↓
+approval
+↓
+pr_creation
+
+Multiple Glue Jobs
+Multiple File Changes
+Session Resume
+Draft Workspace
+Chat History
+PR Preview
+Need new state model.
+
+
+Repository Navigator Design
+Your biggest feature.
+User says:
+change saptcc
+Agent:
+shows folders
+User:
+go inside glue
+Agent:
+shows files
+User:
+edit locals.tf
+Agent:
+opens editor
+Need full design.
+
+
+Session Management
+Github OAuth
+Draft Workspace
+File Browser
+Kafka Flow
+JDBC Placeholder
+Flat File Placeholder
+API Placeholder
+Validation Pipeline
+10 PR Creation
+
+
+Frontend.
+React Vite
+ChatGPT Style
+Session Sidebar
+Workspace Sidebar
+Review Screen
+
+
+Repository Navigator
+Ye tumhara sabse important feature hai.
+Current PRD me sirf mention hai.
+Need complete design:
+User
+ ↓
+saptcc
+ ↓
+Show folders
+ ↓
+glue
+ ↓
+Show files
+ ↓
+locals.tf
+ ↓
+Open file
+ ↓
+Edit file
+ ↓
+Save Draft
+
+
+No workflow can start before environment selection.
+Environment is stored in session state.
+All generated artifacts inherit environment.
+
+
+Current Session
+Changes:
++ Glue Job 1
++ Glue Job 2
++ locals.tf
++ variables.tf
++ secret.tf
+
+
+Single Confirmation Rule
+Current PRD:
+Confirmation before PR
+User Login
+↓
+Github OAuth
+↓
+Session Restore
+↓
+Yesterday's Chats
+↓
+Continue Work
+
+
+UI Design -
+Current PRD says:
+React + Vite
+Not enough.
+Need:
+LEFT
+Sessions
+CENTER
+Chat
+RIGHT
+Workspace
+┌─────────────┬──────────────────┬─────────────┐
+│ Sessions    │ Chat             │ Workspace   │
+│             │                  │             │
+└─────────────┴──────────────────┴─────────────┘
+
+
+Must requirements = 
+ChatGPT style
+Left Sidebar
+Center Chat
+Right Workspace
+Session Restore
+Workspace Panel
+PR Review Screen
+Validation Drawer
+Folder Explorer
+No confirmation allowed during workflow.
+Only one confirmation:
+Raise Pull Request?
+
+
+
+User:
+Change saptcc locals.tf
+Agent ko automatically derive karna chahiye:
+Repository Path
+Folder
+Subfolder
+Module
+File Type
+Terraform Context
+Dependencies
+
+Agent ko automatically pata hona chahiye:
+affected module
+affected glue jobs
+affected terraform resources
+Ye derivation matrix me add karna chahiye.
+
+Agent should derive:
+changed_files_count
+created_glue_jobs_count
+validation_status
+pr_ready
+
+ek same session me hi user multple glue job create kar sakta h and multiple file change kar sakta h and last me ek hi pr raise karega
+means multiple system ke liye bhi same session me hi user glue job create kar sakta h and multiple file change kar sakta h and last me ek hi pr raise karega like saptcc and saptce ke liye bhi user glue job create kar sakta h and multiple file change kar sakta h and last me ek hi pr raise karega
+
+Multiple file changes
+Multiple glue jobs
+Editable until PR
+Session restore
+ChatGPT history
+Draft workspace
+
+Session Model
+Session
+Messages
+DraftWorkspace
+PRRecord
+
+
+Actual Glue Job Behavior
+Existing Source System
+Example:
+saptcc/
+ ├── locals.tf
+ └── glue.tf
+User creates new Glue Job for existing saptcc.
+Agent:
+saptcc/locals.tf   -> MODIFY
+saptcc/glue.tf     -> NO NEW FILE
+
+New Source System
+saptcc/locals.tf -> create
+saptcc/glue.tf   -> Mcreate
+
+
+Open Chat
+↓
+Select Environment
+(DEV / PROD)
+↓
+Choose Operation
+
+1. Modify Existing Files
+2. Create Glue Job
+↓
+Perform Operation
+↓
+Save to Draft Workspace
+↓
+Agent asks ONLY:
+What would you like to do next?
+
+• Create Another Glue Job
+• Modify Existing Files
+• Review Draft Workspace
+• Create Pull Request
+↓
+User repeats as many times as needed
+↓
+Single Validation
+↓
+Single Confirmation
+↓
+Create PR
+
+
+Important ==>
+Ab agent ko kabhi nahi puchhna user se ===>
+How many Glue Jobs?
+Aur kabhi nahi puchhna:
+Do you want to continue?
+Har operation ke baad sirf:
+What would you like to do next?
+
+
+validation kab chalegi --> Sirf PR create karne se pehle ek baar
+Validation runs ONLY ONCE
+Immediately before PR creation
+
+GitHub OAuth
+↓
+Store Token
+↓
+Restore Future Sessions
+
+
+Minimum Questions
+Minimum Interruptions
+Maximum Automation
+
+
+Session Rule
+GitHub OAuth Once
+↓
+Persist Session
+↓
+Restore Future Sessions
+↓
+ChatGPT Style History
+
+
+User Ko Kya Dikhega
+PR se pehle Review Screen me:
+Topic Name
+Kafka Secret Name
+Glue Job Name
+IAM Role
+Worker Type
+Glue Version
+Workers
+Scheduling Mode
+Job Type
+Job Verion
+Enterprise Function
+Subgroup
+LH DB
+S3 Path
+Commit Message
+PR Title
+PR Description
+Sab editable.
+
+
+User ko nhi dikhega - 
+Validation Rules
+Terraform Internal Values
+Bootstrap Servers
+Backend Validation Logic
+Derived Internal Metadata
+
+
+
+Agent will asked from the use - 
+What would you like to do next?
+- Create Another Glue Job
+- Modify Existing Files
+- Review Draft Workspace
+- Create Pull Request
+- Discard Last Change
+
+because users make mistakes.
+Final:
+Create Another Glue Job
+Modify Existing Files
+Review Draft Workspace
+Discard Last Change
+Create Pull Request
+
+
+
+Draft Workspace Engine
+Session Persistence
+State Model V2
+Snapshot System
+Repository Navigator
+Folder Explorer
+File Explorer
+File Editing
+Glue Job Creation
+Existing Source Flow
+New Source Flow
+Auto Derivation Engine
+Validation Pipeline
+Terraform Validation
+PR Creation
+GitHub Integration
+React Vite UI
+ChatGPT Style UX
+Workspace Panel
+History Panel
+
+
+
+Existing Source System
+Agent jab Glue Job create kare for edgisting system in the mif repo
+saptcc/locals.tf  -> MODIFY
+saptcc/glue.tf    -> NO CHANGE
+
+Lekin agar user baad me choose kare:
+Modify Existing Files
+to user repository ke kisi bhi file tak navigate kar sakta hai:
+saptcc/glue.tf
+saptcc/locals.tf
+saptcc/anything.tf
+Aur phir agent user ke instruction ke hisab se modify karega.
+Matlab:
+Agent Generated Changes
+≠
+User Requested Changes
+Agent khud se glue.tf touch nahi karega.
+User bolega to karega.
+
+
+Final UX Flow
+Step 1
+Environment
+DEV / PROD
+Source System
+SAPTCC
+Schema Grain
+multi-1
+Bas.
+
+Step 2
+Create Glue Job
+OR
+Modify Existing Files
+If User Chooses Create Glue Job
+Agent:
+Generate Draft
+Modify locals.tf
+Derive all values
+Save in Draft Workspace
+Step 3
+Tabhi show hoga jab Draft Workspace me kam se kam 1 change ho.
+What would you like to do next?
+• Create Another Glue Job
+• Modify Existing Files
+• Review Draft Workspace
+• Discard Last Change
+• Create Pull Request
+
+Modify Existing Files
+
+User:
+Modify Existing Files
+Agent:
+Repository Explorer
+
+saptcc
+ ├── locals.tf
+ ├── glue.tf
+ └── ...
+User:
+Open glue.tf
+Agent:
+File Opened
+What changes would you like to make?
+Aur yahan se chatbot style editing.
+
+Very Important UX Rule
+User kisi bhi time bol sakta hai:
+Change IAM Role
+Change Worker Count
+Change Glue Version
+Change PR Title
+Change S3 Path
+Change Schedule
+Change Job Name
+Agent directly Draft Workspace update karega.
+No navigation required.
+Example:
+User:
+Change worker count to 20
+Agent:
+Updated
+Workers
+10 → 20
+Draft Workspace updated.
+
+PR Review Screen
+PR create karne se pehle exactly GitHub jaisa diff dikhna chahiye.
+Added
++ new_glue_job = {
++   job_name = "abc"
++ }
+Green.
+Removed
+- worker_count = 10
+Red.
+Modified
+- worker_count = 10
++ worker_count = 20
+Red + Green.
+Exactly GitHub style.
+User ko clearly dikhna chahiye:
+Files Changed: 3
+saptcc/locals.tf
+saptcc/glue.tf
+validation_rules.json
+Aur har file expand karke diff dekh sake.
+
+
+Before Starting Implementation
+Main ek aur chhota freeze add karunga:
+Draft Workspace Rule
+Every operation
+↓
+Create Snapshot
+↓
+Save State
+↓
+Update Workspace
+Taaki:
+Discard Last Change
+instant kaam kare.
+
+Ab mere hisab se architecture complete hai.
+Session State V2
+Draft Workspace
+Snapshot Engine
+Change Tracking
+Diff Engine
+
+
+
+Initially:
+Create Glue Job
+Modify Existing Files
+Only
+After first Glue Job Created
+Then:
+Create Another Glue Job
+Modify Existing Files
+Review Draft Workspace
+Discard Last Change
+Create Pull Request
+show hoga.
+Agar user sirf file modify karta hai aur koi glue job nahi banayi:
+Create Another Glue Job
+show nahi hona chahiye.
+
+Snapshot Rule
+User ko kabhi:
+Snapshot 1
+Snapshot 2
+nahi dikhana.
+Backend:
+Auto Snapshot
+Frontend:
+Discard Last Change
+Only.
+Bilkul sahi.
+
+confluent_minerva_dev/topics_saptcc.tf
+exist hi nahi karti.
+To agent:
+Topic validation failed.
+Source system not configured.
+
+UI me user ko schema_grain ko dr1opdown me nahi dikhaunga, user ko free text me enter karna hoga, aur agent ke through hi topic name generate hoga.
+
+
+
+User:
+DEV
+SAPTCC
+MULTI-1
+Agent:
+dev.saptcc.multi-1.raw
+Then:
+confluent_minerva_dev/
+    topics_saptcc.tf
+search karega.
+Case 1
+File exists + schema grain found
+Continue
+Case 2
+File exists + schema grain NOT found
+Topic validation failed.
+Please create the topic first.
+Stop.
+Case 3
+File NOT found
+Topic validation failed.
+Source system not configured.
+
+Stop.
+No schema list.
+No topic suggestions.
+No extra UI.
+Existing Source System
+Example:
+saptcc/
+├── locals.tf
+└── glue.tf
+Glue Job creation:
+locals.tf -> MODIFY
+glue.tf -> NO CHANGE
+Only if user explicitly chooses:
+Modify Existing Files
+then:
+glue.tf
+can be edited.
+
+
+user :
+DEV
+SAPTCC
+MULTI-1
+Agent:
+dev.saptcc.multi-1.raw
+Then:
+confluent_minerva_dev/
+    topics_saptcc.tf
+search karega.
+Case 1
+File exists + schema grain found
+Continue
+Case 2
+File exists + schema grain NOT found
+Topic validation failed.
+Please create the topic first.
+Stop.
+Case 3
+File NOT found
+Topic validation failed.
+Source system not configured.
+Stop.
+No schema list.
+No topic suggestions.
+No extra UI.
+Existing Source System
+Example:
+saptcc/
+├── locals.tf
+└── glue.tf
+Glue Job creation:
+locals.tf -> MODIFY
+glue.tf -> NO CHANGE
+Only if user explicitly chooses:
+Modify Existing Files
+then:
+glue.tf
+can be edited.
+New Source System
+Agent creates:
+<source_system>/locals.tf
+<source_system>/glue.tf
+automatically.
+Menu Visibility
+Initially:
+Create Glue Job
+Modify Existing Files
+Only.
+After first Glue Job creation:
+Create Another Glue Job
+Modify Existing Files
+Review Draft Workspace
+Discard Last Change
+Create Pull Request
+Draft Workspace
+User never sees:
+Snapshots
+Version IDs
+Internal State
+
+Only:
+Discard Last Change
+Review Screen
+Before PR:
+GitHub-style diff:
++ Added
+- Removed
+Green and Red.
+All editable.
+User can still type:
+Change worker count
+Change IAM role
+Change schedule
+Change job name
+Change S3 path
+and agent updates Draft Workspace.
+My Final Recommendation
+Do NOT spend more time on architecture.
+You already have:
+PRD
+Conversation Design
+UI UX Design
+Auto Derivation
+State Model
+Repository Navigator
+LangGraph Architecture
+Architecture Freeze Review
+
+New Rule 1 — One PR = One Commit
+Tumhara requirement:
+Session Start
+↓
+10 File Changes
+↓
+3 Glue Jobs
+↓
+5 Derived Value Updates
+↓
+2 Manual File Edits
+↓
+Create PR
+Final Git History:
+1 PR
+↓
+1 Commit Only
+Kabhi:
+Commit 1
+Commit 2
+Commit 3
+Commit 4
+nahi.
+Implementation direction:
+git add .
+git commit
+(single final commit)
+git push
+Ya conflict resolution ke case me:
+git commit --amend
+git push --force-with-lease
+
+
+Conflict Resolution Agent
+Agar:
+User Session Running
+aur beech me kisi aur ki PR merge ho jaye.
+Then:
+PR Create
+↓
+Conflict Detected
+Agent automatically:
+git fetch
+git rebase
+try karega.
+Agar conflict aaya:
+User ko exactly GitHub style diff dikhana hai:
+Incoming Change
+Current Change
+Options:
+Accept Incoming
+Accept Current
+Accept Both
+Manual Edit
+User choose karega.
+Then:
+Resolve
+↓
+git add
+↓
+git commit --amend
+↓
+git push --force-with-lease
+No new commit.
+Still:
+1 PR
+1 Commit
+
+Requirements Freeze - 
+State Model V2
+Draft Workspace
+Session Persistence
+Snapshot Engine
+Diff Engine
+
+Tumhari final requirement:
+User can modify ANY derived value
+until PR creation
+Examples:
+Change IAM Role
+Change Worker Count
+Change Glue Version
+Change LH DB
+Change S3 Path
+Change PR Title
+Change Commit Message
+Everthing that is genrated by the agent can be edited by the user until PR creation.
+Agent will simply update the Draft Workspace.
+
+
+Implement:
+Detect Conflict
+↓
+Show GitHub Style Diff
+↓
+User Chooses
+Accept Incoming
+Accept Current
+Accept Both
+Manual Edit
+Phase 2
+Implement:
+git commit --amend
+git push --force-with-lease
+
+
+Important Features to Implement
+1. State Integration
+2. Draft Workspace Integration
+3. Topic Validation Flow
+4. One PR One Commit
+5. Conflict Resolution
+6. React UI
+7. Session History
+8. GitHub OAuth
+✅ DraftWorkspaceService
+✅ SnapshotEngine
+✅ DiffEngine
+✅ SessionPersistenceService
+✅ Snapshot-based Discard
+✅ Backend-only Snapshots
+
+
+Flow = 
+Environment
+↓
+Source System
+↓
+Schema Grain
+↓
+Repository Topic Validation
+↓
+Knowledge Base Derivation
+↓
+Draft Workspace
+↓
+Create Another Glue Job
+↓
+Modify Existing Files
+↓
+Review Draft Workspace
+↓
+Discard Last Change
+↓
+Create PR
+
+
+One PR = One Commit
+Current:
+create_file()
+update_file()
+multiple commits.
+Required:
+All changes
+      ↓
+Single tree
+      ↓
+Single commit
+      ↓
+Single PR
+
+
+Repository = Authoritative
+confluent_minerva_dev/topics_<source>.tf
+schema_grain present ?
+    YES -> Continue
+    NO  -> Please create the topic first
+
+
+Session
+    ↓
+Draft Workspace
+    ↓
+File Changes
+    ↓
+Snapshot Engine
+    ↓
+Diff Engine
+    ↓
+Review Draft Workspace
+    ↓
+Discard Last Change
+    ↓
+Create Another Glue Job visibility
+
+Implementation Steps
+Create Another Glue Job
+Modify Existing Files
+Review Draft Workspace
+Discard Last Change
+Create Pull Request
+
+
+
+Branch Creation Rule Missing
+Add:
+One Draft Workspace
+=
+One Dedicated Branch
+draft/<session_id>
+or
+draft/<draft_id>
+Example:
+draft/5fd8f9
+Reason:
+Conflict handling easy hogi.
+
+
+3. PR Creation Lock Missing
+User PR button 2 baar daba de to?
+Add:
+Draft Status
+OPEN
+↓
+REVIEW
+↓
+PR_CREATING
+↓
+PR_CREATED
+Jab:
+PR_CREATING
+ho jaye
+tab duplicate PR request reject.
+
+4. Draft Freeze Rule Missing
+Current design me user:
+Create PR
+click karne ke baad bhi theoretically draft edit kar sakta hai.
+Add:
+Create PR pressed
+↓
+Draft frozen
+↓
+Collect files
+↓
+Commit
+↓
+PR
+PR create hone tak edits blocked.
+
+
+
+5. Most Important — Conflict Architecture
+Ye future ke liye abhi add karvao.
+Tumhara final rule tha:
+Incoming
+Current
+Both
+GitHub style.
+Add metadata:
+draft_base_sha
+repo_head_sha
+conflict_files[]
+
+
+Repository is authoritative
+GitHub Repo
+   ↓
+confluent_minerva_dev/topics_saptcc.tf
+   ↓
+schema_grain check
+Aur confluent_minerva_dev folder abhi sirf local me hai, GitHub repo me push hi nahi hua, to naturally:
+GitHubService.get_file_content()
+ko file milegi hi nahi.
+Result:
+Topic not found in repository
+Please create the topic first
+aur saare Kafka tests fail ho jayenge.
+
+Most important features to implement:
+✅ GitHub OAuth
+✅ Session History (ChatGPT style)
+✅ Draft Workspace
+✅ Multiple Glue Jobs in one PR
+✅ Multiple File Changes in one PR
+✅ One PR = One Commit
+✅ Repository Navigator
+✅ Terraform Validation before PR
+✅ Kafka Flow
+✅ JDBC Placeholder
+✅ Flat File Placeholder
+✅ API Placeholder
+✅ Dynamic Naming Convention
+✅ Editable Until PR Creation
+✅ Review Screen
+✅ React + Vite Frontend
+✅ Session-wise storage
+✅ PR Preview
+
+Knowledge Base
+Source System
+   |
+   +-- worker type
+   +-- glue version
+   +-- retries
+   +-- tags
+   +-- IAM role
+   +-- LH DB
+   +-- S3 path
+   +-- naming rules
+
+
+PR Review Screen Design
+Abhi defined nahi:
+User ko final screen me kya dikhana hai?
+Mere hisab se:
+Environment
+Changes
+  - file 1
+  - file 2
+
+Glue Jobs
+  - Job 1
+  - Job 2
+Terraform Validation
+  PASS
+Commit Message
+PR Title
+PR Description
+[Create PR]
+
+
+User
+ ├── env
+ ├── source_system
+ └── schema_grain
+
+Agent
+ ├── derive topic name
+ ├── check topic existence
+ ├── derive secret name
+ ├── derive IAM role
+ ├── derive worker type
+ ├── derive glue version
+ ├── derive workers
+ ├── derive LH DB
+ ├── derive S3 path
+ ├── derive job version
+ ├── derive tags
+ └── derive defaults
+
+
+Kafka Secret Name      [editable]
+Glue Job Name          [editable]
+IAM Role               [editable]
+Worker Type            [editable]
+Glue Version           [editable]
+Workers                [editable]
+Scheduling Mode        [editable]
+Enterprise Function    [dropdown]
+Subgroup               [dropdown]
+LH DB                  [editable]
+S3 Path                [editable]
+Commit Message         [editable]
+PR Title               [editable]
+PR Description         [editable]
+
+
+
+Ek aur important clarification
+Tumhari latest requirement ke according:
+User se ye nahi puchhna:
+❌ Kafka Topic Name
+❌ Secret Name
+❌ Worker Type
+❌ IAM Role
+❌ Glue Version
+❌ Workers
+❌ LH DB
+❌ S3 Path
+❌ Topic Type
+❌ Retry Count
+
+Source System dropdown
+Schema Grain validation
+Duplicate Glue Job validation
+Default Schedule = Daily 1 AM
+
+### Validation & Derivation Sources
+- Source System list derived from repository folders
+- Schema Grain validated from topics_<source>.tf
+- Duplicate Glue Job validated from locals.tf
+- Default trigger schedule derived as Daily 1 AM
+- User may override schedule in review screen
+
+Source system dropdown populated dynamically from GitHub repo folders(mif repo ke folders dekh ke source system ka dropdown populate karna hoga) and schema grain is free text input but validated against topics_<source>.tf file in the repo.
+
+Source System Dropdown
+   ↓
+Read folders from:
+mif-ingest-to-lakehouse-infra-dev
+
+Example:
+saptcc
+saptce
+saptrm
+AND
+Allow custom source system entry
+
+
+Duplicate Glue Job Detection
+Tumhara latest requirement tha:
+Check:
+saptcc/locals.tf
+If Glue Job Name already exists
+BLOCK creation
+Design me job_key mention hai but:
+locals.tf lookup
+explicitly highlight karna chahiye.
+
+5. JDBC / Flat File / API Placeholder
+Sabse important jo log bhool jaate hain.
+Tumne clearly bola tha:
+Kafka -> full implementation
+JDBC -> placeholder node
+Flat File -> placeholder node
+API -> placeholder node
+Ye future graph architecture me mention hona chahiye.
+
+
+draft_glue_jobs = 
+env
+id
+draft_id
+topic
+glue_job_name
+kafka_secret_name
+scheduling_mode
+enterprise_function
+subgroup
+iam_role
+worker_type
+enterprise_function
+subgroup
+workers
+schedule
+lh_db
+s3_path
+created_at
+updated_at
+
+draft_glue_jobs
+--------------------------------
+job_name
+topic
+kafka_secret_name
+iam_role
+worker_type
+glue_version
+workers
+enterprise_function
+subgroup
+lh_db
+s3_paths
+schedule
+
+
+
+
+draft_pr_metadata = 
+env
+id
+draft_id
+commit_message
+pr_title
+pr_description
+branch_name
+
+
+draft_pr_metadata ==>
+branch_name
+commit_message
+pr_title
+pr_description
+review_status
+pr_title
+pr_description
+commit_message
+branch_name
+pr_url
+pr_number
+commit_sha
+
+drafts = PR metadata only
+
+Ye mapping freeze karna bahut important hai - 
+UI
+ ↓
+Draft Workspace
+ ↓
+Database
+ ↓
+PR Generation
+
+Draft Workspace
+     ↓
+PostgreSQL
+
+dono rakhna h -->
+✅ sessions.environment
+✅ draft_glue_jobs.environment
+
+
+2. source_system aur schema_grain ko job level par rakhne ka benefit
+Tumhara future flow hai:
+Draft
+├── Kafka Job -> saptcc
+├── Kafka Job -> saptce
+└── JDBC Job -> new_system
+Agar ye values draft level par hongi to sirf ek hi source_system store ho payega.
+Job level par rakhne se:
+Job A -> saptcc
+Job B -> saptce
+Job C -> xyz
+sab ek hi draft me support ho jayenge.
+
+
+1 Session
+    ↓
+1 Draft
+    ↓
+Multiple Jobs
+    ↓
+Multiple File Changes
+    ↓
+1 PR
+
+Most important architecture decision:
+Postgres migration
+API changes
+Frontend changes
+Snapshot changes
+PR generation changes
+
+
+Sabse important -
+User inputs:
+- Environment
+- Source System
+- Schema Grain
+Agent derives:
+dev.saptcc.multi-1.raw
+To:
+❌ Topic editable nahi hoga
+✅ Topic read-only hoga
+User topic change karna chahta hai to:
+environment
+source_system
+schema_grain
+change kare.
+Agent fir topic regenerate kare.
+
+
+
+sessions
+ └── environment
+
+drafts
+ └── PR metadata only
+      pr_title
+      pr_description
+      commit_message
+      branch_name
+
+draft_glue_jobs
+ ├── environment
+ ├── source_system
+ ├── schema_grain
+ ├── topic
+ ├── kafka_secret_name
+ ├── glue_job_name
+ ├── iam_role
+ ├── worker_type
+ ├── glue_version
+ ├── workers
+ ├── scheduling_mode
+ ├── job_version
+ ├── enterprise_function
+ ├── subgroup
+ ├── lh_db
+ ├── s3_paths
+
+
+Audit columns present?
+PR audit columns present?
+connector_type present?
+secret reference strategy finalized?
+content_size/content_hash/content_pointer present?
+required indexes defined?
+unique(draft_id, job_key) defined?
+snapshot retention fields defined?
+
+
+PostgreSQL DDL for:
+sessions
+drafts
+draft_glue_jobs
+draft_files
+snapshots
+
+Include:
+CREATE TABLE statements
+Primary Keys
+Foreign Keys
+Unique Constraints
+Check Constraints
+Required Indexes
+Audit Columns
+PR Audit Columns
+Connector Support Columns
+Snapshot Support Columns
+Content Pointer Support
+Secret Reference Support
+
+Audit Columns
+Required fields:
+created_by
+updated_by
+created_at
+updated_at
+
+
+
+Required fields:
+pr_created_by
+pr_created_at
+
+
+sessions(current_draft_id)
+draft_glue_jobs(draft_id)
+draft_glue_jobs(job_key)
+draft_files(draft_id, path)
+snapshots(draft_id, created_at)
+
+
+
+Item	Status
+Ownership Model	✅ PASS
+Documentation Consistency	✅ PASS
+Audit Columns	✅ PASS
+PR Audit Columns	✅ PASS
+Secret Strategy	✅ PASS
+Connector Strategy	✅ PASS
+Content Storage Strategy	✅ PASS
+Snapshot Restore Model	✅ PASS
+Current Snapshot Linkage	✅ PASS
+Constraints	✅ PASS
+Indexes	✅ PASS
+Migration Plan	✅ PASS
+
+
+
+Recommended order:
+Schema Validation
+Validate DDL against PostgreSQL
+Verify FK graph
+Verify indexes
+Verify constraints
+Migration Validation
+Fresh DB install
+Upgrade from legacy schema
+Backfill validation
+Functional Validation
+Session lifecycle
+Draft lifecycle
+Review Workspace persistence
+Snapshot create/restore
+Integration Validation
+Multiple Glue Jobs
+JDBC placeholders
+Flat File placeholders
+API placeholders
+PR creation flow
+Concurrency Validation
+Redis lock tests
+Concurrent edits
+Snapshot race conditions
+PR creation race conditions
+Audit Validation
+audit.jsonl generation
+actor attribution
+before/after state capture
+
+
+must pass -> 
+DDL_VALIDATION = PASS
+MIGRATION_VALIDATION = PASS
+FUNCTIONAL_VALIDATION = PASS
+DDL_READY = PASS
+VALIDATION_READY = PASS
+IMPLEMENTATION_READY = PASS
+
+
+Most important implementation steps:
+Area	Status
+OAuth	✅ Complete
+Session Persistence	✅ Complete
+Repository Navigator	✅ Complete
+File Modification Flow	✅ Complete
+Glue Job Flow	✅ Complete
+topic Validation	✅ Complete
+Knowledge Base Derivation	✅ Complete
+Review Workspace	✅ Complete
+Conflict Resolution	✅ Complete
+Session History	✅ Complete
+Session Reopen	✅ Complete
+Restore Draft Workspace	✅ Complete
+Navigator Restore✅ Complete
+Multiple Glue Jobs	✅ Complete
+Dynamic GPT UI	✅ Complete
+
+
+ChatGPT jaisa experience
+Today
+Yesterday
+Previous
+Session Sidebar
+Open Old Session
+Restore Draft
+Restore Workspace
+Restore Flow
+
+most important features to implement:
+State V2 Integration
+Draft Workspace Integration
+Topic Validation Flow
+One PR One Commit
+Conflict Resolution
+Accept Incoming
+Keep Current
+Manual Edit
+Diff View
+PR Block Until Resolution
+GitHub OAuth
+Session Persistence
+Session Recovery
+Repository Navigator
+Review Workspace
+Session History grouping
+ChatGPT-style sidebar
+Session restore UX
+OAuth
+Session storage
+PR creation
+Backend validations
+Tests
+
+ReviewWorkspace.jsx
+Chat → Review transition
+Derived values dikhane ka flow 
+PR create button connect
+Session token ke saath PR API call connect 
+
+
+Must have features:
+GitHub OAuth
+Session Persistence
+Session Recovery after Restart
+Repository Navigator
+File Open/Edit APIs
+Session History Backend
+Draft Snapshot Creation
+PR Creation OAuth Identity se
+Conflict Detection (basic level)
+React Vite Scaffold
+
+
+2. Session History
+ChatGPT jaisa
+Yesterday Session
+Today Session
+Session Wise
+GitHub User Wise
+
+
+3. Conflict Resolution
+User last step tak kuch bhi edit kar sake
+Before PR raise
+Conflict Resolution
+
+
+Chat Open
+↓
+Select Env
+↓
+Select Operation
+↓
+Normal Chat Experience
+↓
+Dynamic Forms
+↓
+Review Workspace
+↓
+Single Confirmation
+↓
+PR Creation
+
+
+Everyone node --> only and only one work for one node
+1 extra node for create by the copilot --> jisse yadi user scope se bahar ke question ko puchhega to use node se bo sabhi question handle hoge must i need this node
+
+
+ui me user interacation changed - normal conversation -- like the gpt 
+git hub ka aouth salna h  -> user ki session store karne -> session ki history manged karna chatgpt ke jese kal ka session aaj ka 
+git aouth + session wise
+daynamic bana h everthing sabhi kuchh ko
+ek chij ko dekhna ke bad dubara mat dikhao confirmation
+{env}.{source_system}.{schema_grain}.raw -> puchho then autogenrate the topic name
+cron(0 1 * * ? *) --> ye agent generate karega keval user se English me puchhega kab chalana h glue job in English me user enter karega then cron job agent develop karega
+each node one work --> only 
+react vite frontendd
+collection 
+
+
+must implement -
+State V2 Integration
+Draft Workspace Integration
+Topic Validation Flow
+One PR One Commit
+OAuth Login Backend
+OAuth Callback
+Session Registry
+PR Creation via OAuth Identity
+Session Persistence DB me
+Restart ke baad Session Recovery
+Terraform Validation Flow
+Kafka Topic Validation Flow
+Duplicate Glue Job Validation
+
+
+Verification
+Verify:
+Login
+↓
+OAuth Callback
+↓
+Session Save
+↓
+Backend Restart
+↓
+Session Restore
+↓
+Draft Workspace
+↓
+Create PR
+Expected:
+PR created using authenticated GitHub user identity.
+
+
+
+Implementation Steps - > 
+OAuth Login
+    ↓
+Session Created
+    ↓
+Token memory me hai
+    ↓
+Server restart
+    ↓
+Token lost
+
+
+Session History
+→ Conflict Resolution
+→ PR Creation with OAuth
+→ ChatGPT-style React UI
+→ End-to-End Flow
+
+
+
+Verification
+After implementation:
+Trace complete flow:
+GitHub Login
+↓
+Session Creation
+↓
+Chat Flow
+↓
+Topic Validation
+↓
+Draft Workspace
+↓
+Review Workspace
+↓
+Terraform Validation
+↓
+PR Creation
+↓
+Session Saved
+
+Backend OAuth Config
+✅ OAuth Service
+✅ OAuth Routes
+✅ Session DB fields
+✅ React Auth Context
+✅ OAuth Callback Page
+✅ GitHub Login Button
+✅ User Sidebar
+✅ AuthProvider Integration
+✅ PR Creation OAuth Binding
+✅ Session History
+✅ Conflict Resolution UI/Flow
+✅ Main ChatGPT-style UI Flow Completion
+✅ End-to-End Validation
+
+
+Environment Selection
+Modify File Flow
+Create Glue Job Flow
+Kafka Topic Validation
+Draft Workspace
+Review Workspace
+One PR One Commit
+Conflict Resolution
+Session History
+GitHub OAuth
+React UI
+
+
+
+# Glue job terraform job script/entry creation process ( step-by-step )
+- The goal is to collect the required parameters and generate a consistent Terraform job entry.
+
+ 
+
+--Name of the topic, you want to create/modify the terraform job script/entry
+   Pattern: {environment}.{source-system}.{schema-grain}.raw
+   for example : dev.saptcc.multi-1.raw   , dev.saptcc.cdhdr.raw
+   -check validation pattern
+   - name of the topic should be taken as source_kafka_topic in glue_job_arguments block
+
+ 
+
+   ### extract {source-system}
+
+ 
+
+   - source system - check if already exists or new one need to be created.
+   a) if already exists , need to add terraform job script/entry in existing locals.tf of that source_folder i.e. folder with <source_system> name
+
+   b) if not exists , 
+     - create a new folder with <source_system> name ,for example: `saptce/`, `wahoo/`, `yongyou/`
+   - create `locals.tf` and `glue.tf` matching repo patterns.
+
+-- Job Name (logical name)
+    Pattern : `kafka-to-iceberg-batch-<source>-<stream>`
+  - Example: kafka-to-iceberg-batch-saptce-multi-1, kafka-to-iceberg-batch-saptce-acdoca
+    - Must be unique within the folder’s `glue_jobs` map.
+
+ 
+
+-- Worker Type
+     Allowed : `G.1X`,`G.2X`,`G.4X`,
+   Default : `G.1X`
+
+ 
+
+-- Number of workers
+    Allowed : upto 10
+    Default : 1
+
+-- Job Type.
+     Allowed : Manual or Scheduled (cron)
+     Default : Manual ( for now)
+
+-- source
+     Allowed : kafka
+   Default : kafka
+
+ 
+
+-- Enterprice 
+     Allowed : AGTR, FOOD, SPEC
+   Default : AGTR
+
+ 
+
+-- subgroup 
+     Allowed : apac, na, latam
+   Default : apac
+
+ 
+
+-- Sink/Target Type
+      Allowed : iceberg
+    Default : iceberg
+
+ 
+
+-- Target Database
+      Pattern : lh_<source_system_hyphenated>_raw_{source-data-environment}
+    Example : lh_cdp_sap_tc1_raw_dev, lh_sap_tcc_raw_prd
+
+
+
+
+
+ 
+
+Rules :
+
+ 
+
+## 1) Job identity and versioning
+
+ 
+
+These map to the top-level job entry in `locals.tf` and module inputs in `glue.tf`.
+
+ 
+
+1. **Job key / name (logical name)**
+   - Example: `kafka-to-iceberg-batch-<source>-<stream>`
+   - Must be unique within the folder’s `glue_jobs` map.
+
+ 
+
+2. **Environment(s) to support**
+   - Usually `dev` and `prod` (the repo often uses `local.env` to select endpoints).
+
+ 
+
+3. **Talaria job version** (`job_version`)
+   - Default: `0.3.0`
+   - This controls which Talaria script/library artifacts are used.
+
+ 
+
+4. **Job type** (`job_type`)
+   - Default: `unified`
+   - (Other options exist in the module: `unified_batch`, `kafka_to_iceberg`, etc.)
+
+ 
+
+---
+
+ 
+
+## 2) Operational sizing and execution
+
+ 
+
+1. **Worker type** (`worker_type`)
+   - Example: `G.2X`
+
+ 
+
+2. **Number of workers** (`number_of_workers`)
+   - Example: `4`
+
+ 
+
+---
+
+ 
+
+## 3) Scheduling (how/when it runs)
+
+ 
+
+Scheduling is controlled by the optional `trigger_schedule` field in the job entry.
+
+ 
+
+1. **Run mode**
+   - Manual (no schedule)
+   - Scheduled (cron)
+
+ 
+
+2. If scheduled: **cron expression** (`trigger_schedule`)
+   - Example: `cron(0 1 * * ? *)`
+
+ 
+
+---
+
+ 
+
+## 4) Dataflow inputs: Kafka source (required for this pattern)
+
+ 
+
+These become Talaria arguments under `glue_job_arguments`.
+
+ 
+
+1. **Kafka bootstrap endpoint per environment**
+   - dev endpoint
+   - prod endpoint
+
+ 
+
+2. **Kafka secret name**
+   - Example pattern: `minerva-${env}-corp-mif-<source>-gluejob-sa-cc-api-creds`
+
+ 
+
+3. **Kafka topic name pattern**
+   - Example: `${env}.<source>.multi-1.raw`
+   - Collect the exact topic(s) to consume.
+
+ 
+
+**Validation your chatbot should do:**
+
+ 
+
+- Topic naming: ensure you’re consistent with `.raw` naming if downstream expects raw.
+- If the topic differs between envs, collect both explicitly.
+
+ 
+
+---
+
+ 
+
+## 6) Transformations (Talaria pipeline steps)
+
+ 
+
+This job uses two transformers. Your chatbot should support:
+
+ 
+
+- “Use default transformer chain (recommended)”
+- or “Customize transformers”
+
+ 
+
+### 6.1 Transformer 1: timestamp
+
+ 
+
+- Enable timestamp transformer? (yes/no)
+- Column name (default: `processing_timestamp`)
+- Value format (default: `json`)
+
+ 
+
+Terraform mapping:
+
+ 
+
+- `--transformer1 = timestamp`
+- `--transformer1_column = <column>`
+- `--transformer1_value_format = <format>`
+
+ 
+
+### 6.2 Transformer 2: kafka_unpack
+
+ 
+
+- Enable kafka unpack? (yes/no)
+- Metadata output column (default: `__metadata__`)
+
+ 
+
+Terraform mapping:
+
+ 
+
+- `--transformer2 = kafka_unpack`
+- `--transformer2_metadata_column = <column>`
+
+ 
+
+---
+
+ 
+
+## 7) Sink pre-processing: Schema Registry split (recommended)
+
+ 
+
+This pattern uses `kafka_split` before writing to Iceberg.
+
+ 
+
+1. **Schema Registry endpoint per environment**
+   - dev endpoint
+   - prod endpoint
+
+ 
+
+2. **Schema Registry secret name**
+   - Often the same as Kafka secret name.
+
+ 
+
+Terraform mapping:
+
+ 
+
+- `--sink_transformer1 = kafka_split`
+- `--sink_transformer1_schema_registry_endpoint = <endpoint>`
+- `--sink_transformer1_secret_name = <secret>`
+
+ 
+
+---
+
+ 
+
+## 8) Sink outputs: Iceberg configuration (required)
+
+ 
+
+These are the most important values because they define where the data lands.
+
+ 
+
+1. **Iceberg catalog type**
+   - For this repo pattern: `glue`
+
+ 
+
+2. **Glue Catalog account ID per environment** (`--sink_iceberg_catalog_id`)
+   - dev account ID
+   - prod account ID
+
+ 
+
+3. **Target Iceberg database name** (`--sink_iceberg_database`)
+   - Example: `minerva_dev_src_agtr_saptce_prd_raw_db`
+
+ 
+
+4. **Iceberg warehouse S3 prefix** (`--sink_iceberg_warehouse`)
+     Pattern : `s3://minerva-${env}-src-${env}/current/prd/raw/sap_tce/`
+   - Example: `s3://minerva-${env}-src-${env}/current/prd/raw/sap_tce/`
+
+ 
+
+5. **Checkpoint directory S3 prefix** (`--sink_iceberg_checkpoint_dir`)
+   - Example: `s3://minerva-${env}-glue-checkpoints/checkpoints/unified/`
+
+ 
+
+6. **Assume role ARN** for writing to the sink (`--sink_iceberg_assume_role_arn`)
+   - Collect the exact ARN pattern per environment if it differs.
+
+ 
+
+7. **Assume role session name** (`--sink_iceberg_assume_session_name`)
+   - Example: `mif-glue-iceberg`
+
+ 
+
+**Validation:**
+
+ 
+
+- S3 paths must end with `/` (recommended) for consistent prefix handling.
+- Confirm that the database name and warehouse match the intended domain (dev vs prod).
+- Confirm the assume-role account matches the sink catalog/warehouse account.
+
+ 
+
+ 
+
+---
+
+ 
+
+## 11) Output: should generate terraform script
+
+ 
+
+A new entry/script under `glue_jobs` should looks like below:
+
+ 
+
+```
+"<job-key>" = {
+  job_type     = "unified"
+  job_version  = "<talaria-version>"
+  glue_version = "5.1"
+
+ 
+
+  number_of_workers = 4
+  worker_type       = "G.2X"
+  stop_before_start = true
+
+ 
+
+  # Optional
+  # trigger_schedule = "cron(0 1 * * ? *)"
+
+ 
+
+  glue_job_arguments = {
+    "--source"                   = "kafka"
+    "--source_kafka_endpoint"    = local.kafka_bootstrap_endpoint[local.env]
+    "--source_kafka_secret_name" = "<secret-name>"
+    "--source_kafka_topic"       = "<topic>"
+
+ 
+
+    "--transformer1"              = "timestamp"
+    "--transformer1_column"       = "processing_timestamp"
+    "--transformer1_value_format" = "json"
+
+ 
+
+    "--transformer2"                 = "kafka_unpack"
+    "--transformer2_metadata_column" = "__metadata__"
+
+ 
+
+    "--sink_transformer1"                          = "kafka_split"
+    "--sink_transformer1_schema_registry_endpoint" = local.schema_registry_endpoint[local.env]
+    "--sink_transformer1_secret_name"              = "<secret-name>"
+
+ 
+
+    "--sink"                             = "iceberg"
+    "--sink_iceberg_catalog_type"        = "glue"
+    "--sink_iceberg_catalog_id"          = local.miw_account_id[local.env]
+    "--sink_iceberg_database"            = "<glue-db>"
+    "--sink_iceberg_warehouse"           = "<s3-warehouse>"
+    "--sink_iceberg_checkpoint_dir"      = "<s3-checkpoint-dir>"
+    "--sink_iceberg_assume_role_arn"     = "<assume-role-arn>"
+    "--sink_iceberg_assume_session_name" = "mif-glue-iceberg"
+
+ 
+
+    "--sink_trigger" = "availableNow"
+  }
+}
+
+
+## 12) glue.tf file script -
+module "glue_jobs" {
+  for_each = local.glue_jobs
+ 
+  source = "git::https://git.cglcloud.com/mayank/mif-ingest-to-lakehouse-infra-dev.git/mayank/glue_job?ref=main"
+  env    = local.env
+  name   = each.key
+ 
+  existing_iam_role_arn = lookup(each.value, "existing_iam_role_arn", null)
+  glue_version          = lookup(each.value, "glue_version", "")
+  job_type              = lookup(each.value, "job_type", "kafka_to_iceberg")
+  job_version           = lookup(each.value, "job_version", {})
+  topic_name            = lookup(each.value, "topic_name", "")
+  stop_before_start     = lookup(each.value, "stop_before_start", false)
+  number_of_workers     = lookup(each.value, "number_of_workers", 2)
+  worker_type           = lookup(each.value, "worker_type", "G.1X")
+ 
+  extra_py_files   = lookup(each.value, "extra_py_files", {})
+  trigger_schedule = lookup(each.value, "trigger_schedule", "")
+ 
+  glue_job_arguments = lookup(each.value, "glue_job_arguments", {})
+ 
+  secretsmanager_secret_name = lookup(lookup(each.value, "glue_job_arguments", null), "--cc_secret_name", null)
+}
+```
