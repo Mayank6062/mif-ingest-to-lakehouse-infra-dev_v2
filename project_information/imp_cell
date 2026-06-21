@@ -2160,6 +2160,2710 @@ GitHub OAuth
 React UI
 
 
+Flow 2
+
+
+
+Create Glue Job
+
+
+
+User
+
+↓
+
+Env
+
+↓
+
+Kafka  --> yha per kafka ka koi role nhi h mujhe pure project me kafka ko kahi per bhi use nhi karna h keval jo kava topic banega bo confluent_minerva_dev/topics.tf me se verified hoga bas etna hi hona h bo stem tab hogi or jab use dev.saptccc.mulit-1--> en tin value ko clear kar deta h 
+
+↓
+
+Source System
+
+↓
+
+Schema Grain
+
+
+Create Glue Job
+
+User
+ ↓
+Environment
+(dev / prod)
+
+ ↓
+Source System
+(saptcc / saptce / custom)
+
+ ↓
+Schema Grain
+(multi-1)
+
+ ↓
+Agent Derives Topic
+
+dev.saptcc.multi-1.raw
+
+ ↓
+Topic Validation
+
+confluent_minerva_dev/topics_saptcc.tf
+
+ ↓
+multi-1 present ?
+
+YES → Continue
+NO  → Hard Block
+
+ ↓
+Knowledge Base Derivation
+
+ ↓
+Draft Workspace
+
+ ↓
+Review
+
+ ↓
+PR
+
+
+GitHubOAuthNode
+        ↓
+
+SessionManagerNode
+        ↓
+
+EnvironmentNode
+        ↓
+
+OperationNode
+        ↓
+
+IntentRouterNode
+   ┌──────────────┬─────────────┐
+   │              │
+   ▼              ▼
+
+ModifyFlow     CreateGlueJobFlow
+                    ↓
+
+              SourceTypeNode
+                    ↓
+
+       ┌──────┬──────┬──────┬──────┐
+       ▼      ▼      ▼      ▼
+
+Kafka  JDBC  Flat   API
+Node   Node  Node   Node
+
+       ↓
+(Kafka fully implemented)
+
+SourceSystemNode
+       ↓
+
+SchemaGrainNode
+       ↓
+
+TopicValidationNode
+       ↓
+
+DuplicateJobValidationNode
+       ↓
+
+KnowledgeDerivationNode
+       ↓
+
+DraftWorkspaceNode
+       ↓
+
+ReviewWorkspaceNode
+       ↓
+
+TerraformValidationNode
+       ↓
+
+ApprovalNode
+       ↓
+
+PRCreationNode
+
+
+before implemet anything - 
+genrate doc ham use implenmet kar payege ya nhi 
+create the plan
+verification / certification
+implemntq   
+test
+
+Tumhara process ye hona chahiye:
+
+Step N
+    ↓
+Generate Design Doc
+    ↓
+Review
+    ↓
+Freeze
+    ↓
+Verification Checklist
+    ↓
+PASS / FAIL
+    ↓
+Implementation
+    ↓
+Testing
+    ↓
+PASS / FAIL
+    ↓
+Next Step
+
+
+
+Step 1
+Discovery
+PASS
+✅
+
+Step 2
+Architecture Specification
+(in progress)
+
+Step 3
+Verification
+
+Step 4
+DB Design Freeze
+
+Step 5
+LangGraph Design Freeze
+
+Step 6
+API Freeze
+
+Step 7
+Frontend Freeze
+
+Step 8
+Implementation
+
+
+Session
+ ↓
+Draft Workspace
+ ↓
+Multiple File Changes
+ ↓
+Multiple Glue Jobs
+ ↓
+Review
+ ↓
+Single Confirmation
+ ↓
+Create PR
+
+PR button click hote hi:
+
+DRAFT_EDITING
+      ↓
+REVIEW_READY
+      ↓
+PR_CREATING
+      ↓
+PR_CREATED
+
+Session
+ ├─ Glue Job 1
+ ├─ Glue Job 2
+ ├─ Glue Job 3
+ ├─ File Change 1
+ ├─ File Change 2
+ └─ File Change 3
+
+↓
+
+One Draft
+
+↓
+
+One Commit
+
+↓
+
+One PR
+
+User
+ ↓
+GitHub OAuth
+ ↓
+Session Restore
+ ↓
+Environment
+ ↓
+Operation
+ ↓
+Create Glue Job / Modify Existing Files
+ ↓
+Draft Workspace
+     ├── Multiple Glue Jobs
+     ├── Multiple File Changes
+     ├── Multiple Source Systems
+     └── Change Stack
+ ↓
+Review
+ ↓
+Terraform Validation
+ ↓
+One Commit
+ ↓
+One PR
+
+Step 1
+Discovery
+✅
+
+Step 2
+Architecture
+✅
+
+Step 3
+Database Design
+✅
+
+Step 4
+Project Structure Freeze
+⬅ NEXT
+
+Step 5
+LangGraph Structure Freeze
+
+Step 6
+API Contract Freeze
+
+Step 7
+Frontend Structure Freeze
+
+Step 8
+Implementation Roadmap Freeze
+
+----------------------
+
+AB IMPLEMENTATION START
+
+Step 9
+Create Repository Structure
+
+Step 10
+Database Implementation
+
+Step 11
+LangGraph Implementation
+
+Step 12
+API Implementation
+
+Step 13
+Frontend Implementation
+
+Step 14
+Integration
+
+Step 15
+Testing
+✅ Test
+
+Step 1
+Discovery
+LOCK
+
+Step 2
+Architecture
+LOCK
+
+Step 3
+Database
+LOCK
+
+Step 4
+Project Structure
+LOCK
+
+Step 5
+API
+LOCK
+
+Step 6
+Frontend
+LOCK
+
+Step 7
+Roadmap
+LOCK
+
+Step 8
+Bootstrap
+LOCK
+
+===================
+
+NOW IMPLEMENTATION
+
+Step 8.1
+Repository Bootstrap Implementation
+
+Step 8.2
+Bootstrap Verification
+
+Step 9
+Backend Foundation
+
+Step 10
+Database Implementation
+
+Step 11
+LangGraph Foundation
+
+Step 12
+API Layer
+
+Step 13
+Frontend Foundation
+
+Step 14
+Integration
+
+Step 15
+Testing
+
+
+
+Existing Source System
+    →
+Repository Source Of Truth
+
+New Source System
+    →
+Knowledge Base Templates Source Of Truth
+
+Validation
+    →
+Knowledge Base Validation Rules
+
+Derivation
+    →
+Repository Facts + KB Rules
+
+
+Repository Facts
+        +
+Knowledge Catalog
+        +
+Validation Rules
+        +
+Templates
+
+
+Existing Source System
+    →
+Repository Source Of Truth
+
+New Source System
+    →
+Knowledge Base Bootstrap Source Of Truth
+
+Validation
+    →
+Knowledge Base Validation Rules
+
+Derivation
+    →
+Repository Facts
+    +
+Knowledge Base Rules
+    +
+env
+    +
+schema_grain
+
+
+Output me freeze hua:
+
+Knowledge Base Bootstrap Source
+
+matlab:
+
+Repository me nahi hai
+→ KB template use karo
+→ Initial draft generate karo
+→ PR merge hone ke baad
+→ Repository source of truth ban jayega
+
+
+KnowledgeDerivationNode
+        ↓
+KnowledgeBaseService
+        ↓
+RepositoryKnowledgeProvider
+        ↓
+Loaders
+        ↓
+Parsers
+
+KnowledgeBaseService
+        ↓
+Derivers
+
+
+routing
+DraftWorkspace
+↓
+ReviewWorkspace
+↓
+TerraformValidation
+↓
+ReviewWorkspace
+↓
+PRCreation
+
+source_systems.json concept
+
+Bahut powerful hai.
+
+Current architecture me:
+
+env
+source_system
+schema_grain
+
+input hai.
+
+To KB me:
+
+source_systems/
+    saptcc.yaml
+    saptce.yaml
+
+ya
+
+source_systems.json
+
+maintain karna chahiye.
+
+
+validation_rules.json concept
+
+Bahut accha hai.
+
+Current architecture me:
+
+ValidationDeriver
+
+isi se derive karega.
+
+decision_trees.md concept
+
+Bahut useful hai.
+
+Template selection ke liye.
+
+Current architecture me:
+
+TemplateDeriver
+
+isme move ho jayega.
+
+terraform_template.json concept
+
+Ye bhi rakhna chahiye.
+
+Current architecture me:
+
+TemplateModel
+
+banega.
+
+
+Tumhare freeze ke hisab se:
+
+OperationNode
+↓
+EnvironmentNode
+↓
+SourceSystemNode
+↓
+SchemaGrainNode
+↓
+KnowledgeDerivationNode
+
+Freeze ho chuka.
+
+KnowledgeDerivationNode
+↓
+KnowledgeBaseService
+↓
+RepositoryKnowledgeProvider
+↓
+Loaders
+↓
+Parsers
+
+KnowledgeBaseService
+↓
+Derivers
+
+Freeze ho chuka.
+
+Repository Facts
++
+KB Rules
+↓
+DerivedValues
+
+Freeze ho chuka.
+
+Existing Source System
+→ Repository SoT
+
+New Source System
+→ KB Bootstrap SoT
+
+Freeze ho chuka.
+
+Validation Rules
+→ KB Driven
+
+Freeze ho chuka.
+
+Template Selection
+→ TemplateDeriver
+
+Freeze ho chuka.
+
+source_systems registry
+→ SourceSystemModel
+
+Freeze ho chuka.
+
+
+Ye bahut strong concept hai.
+
+Concept:
+
+Draft Workspace
+     ↓
+Snapshot History
+     ↓
+Undo / Restore
+
+Aur:
+
+Every mutation
+→ snapshot create
+→ snapshot linked to draft
+Ye architecture-level concept hai.
+Current architecture me freeze karo:
+Every Draft mutation must create an immutable snapshot.
+Draft is current state.
+Snapshots are history.
+
+
+Review Workspace = Single Source Before PR
+Ye repeatedly multiple docs me consistent hai.
+Concept:
+
+Conversation
+     ↓
+Draft Workspace
+     ↓
+Review Workspace
+     ↓
+PR
+
+Aur:
+
+PR always generated from Review Workspace.
+Recommendation
+100% adopt.
+Ye strong architectural decision hai.
+Multiple Operations Before PR
+Bahut important.
+Old repo repeatedly bol raha:
+User can:
+Create Job
+Edit File
+Create Another Job
+Edit Metadata
+Validate
+Then PR
+PR ek hi baar final me.
+Recommendation
+Freeze.
+
+
+Immutable Snapshot Philosophy
+Ye mujhe sabse strong concepts me se laga.
+Concept:
+Snapshots never modified.
+Restore
+=
+Create new state from old snapshot.
+Not:
+Edit snapshot
+Recommendation
+Freeze.
+Current architecture me ye already fit hota hai.
+
+PR Creation Lock
+Ye implementation detail lagta hai but actually architecture concern bhi hai.
+Concept:
+Only one PR creation operation
+per Draft
+at a time.
+Recommendation
+Keep concept.
+Don't freeze Redis.
+Freeze only:
+PR Creation must be exclusive.
+
+Session → Draft Mapping
+Ye useful hai.
+Concept:
+Session
+owns
+Current Draft
+Current architecture me already indirectly hai.
+Recommendation
+Keep.
+
+
+Draft Status Lifecycle
+Ye mujhe kaafi clean laga.
+OPEN
+↓
+REVIEW
+↓
+PR_CREATING
+↓
+PR_CREATED
+or
+ABANDONED
+Recommendation
+Freeze if Draft Workspace architecture retain karna hai.
+
+
+Conversation Layer
+        ↓
+
+Draft Workspace Layer
+        ↓
+
+Snapshot Layer
+        ↓
+
+Review Workspace Layer
+        ↓
+PR Layer
+
+Freeze karne layak additional concepts
+Draft ↔ Snapshot linkage
+Immutable Snapshot model
+Multiple operations before PR
+Review Workspace authoritative before PR
+Exclusive PR creation
+Session owns current Draft
+Draft lifecycle states
+
+
+Session
+  ↓
+Draft Workspace
+  ↓
+Snapshots
+  ↓
+Review Workspace
+  ↓
+Single PR
+
+
+One Session = One Active Draft
+State V2 integration plan me ye repeatedly emphasized hai.
+Session
+   └── Current Draft
+Ye ownership ambiguity remove karta hai.
+
+Draft as Single Source of Truth
+Sabse important architecture decision.
+PR creation ke time:
+LangGraph state use nahi karna
+Processor memory use nahi karna
+Temporary edits use nahi karna
+Sirf Draft Workspace use karna.
+
+Immutable Snapshot Model
+Snapshot edit nahi hota.
+Restore = old snapshot se new state create.
+Draft Change
+   ↓
+Snapshot Created
+
+Restore
+   ↓
+New State Generated
+Excellent architecture.
+
+Auto Snapshot on Every Mutation
+Har file change ke baad snapshot.
+Add File
+Edit File
+Delete File
+Add Job
+=> Snapshot
+Undo/rollback future me free mil jata hai.
+
+Repository First Validation
+Ye bahut strong finding thi.
+Current runtime verification ne prove kiya:
+Repository Check
+      ↓
+PASS → Continue
+FAIL → STOP
+MIF architecture ke liye ye bilkul correct hai.
+
+ne PR = One Commit
+Bahut strong design.
+Current docs clearly define:
+Draft
+  ↓
+Collect Final Files
+  ↓
+Single Commit
+  ↓
+Single PR
+No per-file commits.
+Ye definitely architecture me hona chahiye.
+
+Draft Lifecycle State Machine
+Ye bhi kaafi clean hai.
+OPEN
+ ↓
+REVIEW
+ ↓
+PR_CREATING
+ ↓
+PR_CREATED
+or
+ABANDONED
+State-driven architecture always easier to maintain hoti hai.
+
+
+Valuable But Not Architecture Freeze Material
+Ye useful hain lekin architecture freeze me nahi daalne chahiye:
+SQLAlchemy plans
+PostgreSQL schema details
+Repository implementations
+DDL drafts
+Migration strategy
+Alembic
+Redis details
+Exact API payloads
+Test inventory documents
+Example: Phase 1 Backend Foundation aur Quick Start docs mostly implementation-oriented hain.
+
+Future-Ready Concepts Worth Keeping
+Security Design
+Security spec me kuch excellent ideas hain:
+OAuth token encryption
+Secrets table
+Secret references instead of raw secrets
+Audit masking
+AWS Secrets Manager/Vault based key storage
+Ye Phase-2/Phase-3 ke liye useful hain.
+
+Feature Flag Rollout
+Bahut achha pattern.
+ENABLE_STATE_V2
+ENABLE_DRAFT_WORKSPACE
+Gradual rollout possible.
+
+Final Verdict
+ freeze karta:
+Session → Draft → Review → PR flow
+One Session = One Active Draft
+Draft as Single Source of Truth
+Immutable Snapshots
+Auto Snapshot on Mutation
+Repository-First Validation
+One PR = One Commit
+Draft Lifecycle State Machine
+
+User
+ ↓
+Session
+ ↓
+Draft Workspace
+ ↓
+Validation
+ ↓
+Review
+ ↓
+Single Commit
+ ↓
+Single PR
+
+1. Draft Workspace as Source of Truth
+PR create karte time LangGraph memory nahi, Draft Workspace use karo.
+
+2. Snapshot System
+Har meaningful change ke baad snapshot create ho.
+Draft v1
+Draft v2
+Draft v3
+Rollback easy ho jayega.
+
+3. Session Recovery
+Agar browser band ho jaye:
+
+Open Session
+↓
+Restore Draft
+↓
+Continue
+User ka kaam lose nahi hoga.
+
+4. Repository-First Validation
+Tumhare project ke liye ye bahut important hai.
+Check repo
+↓
+Validate topic
+↓
+Validate job
+↓
+Create draft
+Kafka se pehle repo check.
+
+5. State Machine
+Draft states define karo:
+OPEN
+REVIEW
+VALIDATED
+PR_CREATING
+PR_CREATED
+ABANDONED
+Ye future bugs bahut kam karega.
+Jo mujhe especially pasand aaya
+Security related implementation ideas:
+Secret references instead of plain secrets
+Audit logging
+Encryption layer
+Secret service abstraction
+In files me security smoke tests aur secret service verification bhi dikh raha hai, jo production-grade thinking indicate karta hai.
+Ye mujhe 100% adopt karna chahiye lagta hai.
+
+✅ Draft Workspace
+✅ Session Recovery
+✅ Snapshot Versioning
+✅ Draft State Machine
+✅ Repository-First Validation
+✅ Single Commit → Single PR
+✅ Audit Logging
+✅ Secret Abstraction Layer
+
+
+Mere hisab se Architecture me MUST ADD
+1. Decision Tree ko LangGraph Nodes me convert karo
+
+decision_trees.md basically complete conversation state machine define kar raha hai.
+
+Current architecture me tumhare paas already nodes hain:
+
+EnvironmentNode
+OperationNode
+TopicValidationNode
+KnowledgeDerivationNode
+ReviewNode
+TerraformValidationNode
+PRNode
+
+Lekin decision tree document ek aur important cheez deta hai:
+
+COLLECT_TOPIC
+↓
+CONFIRM_DERIVED
+↓
+COLLECT_SINK
+↓
+OPTIONAL_OVERRIDES
+↓
+FINAL_CONFIRM
+↓
+GENERATE
+
+Recommendation:
+
+State machine ko DB me persist karo.
+
+draft.current_step
+
+Ye bahut useful hoga resume/recovery ke liye.
+
+2. Validation Engine ko JSON Driven Banao
+
+validation_rules.json sabse valuable file hai.
+
+Abhi agar tum validation Python code me hardcode karoge:
+
+if env not in ...
+if worker not in ...
+
+future maintenance nightmare ban jayega.
+
+Better:
+
+validation_rules.json
+      ↓
+ValidationService
+      ↓
+Runtime Validation
+
+New rules add karne ke liye code deploy nahi karna padega.
+
+Ye definitely architecture me add karunga.
+
+3. Knowledge-Driven Derivation Engine
+
+terraform_template.json me derivation logic explicitly diya gaya hai.
+
+Example:
+
+job_key
+kafka_secret
+checkpoint_dir
+folder_path
+
+Current architecture me:
+
+derive_values()
+
+hardcoded hoga.
+
+Instead:
+
+Knowledge Service
+↓
+Derivation Rules
+↓
+Generated Values
+
+Future-proof.
+
+4. Source System Registry
+
+source_systems.json unexpectedly valuable hai.
+
+Current architecture me:
+
+scan repository
+
+kar rahe ho.
+
+Main dono use karunga:
+
+Repository Scan
++
+Cached Source Registry
+
+Benefits:
+
+Fast UI dropdowns
+Validation
+Suggestions
+Existing job detection
+5. Repo Validation Before Draft Creation
+
+check_repo_topic.py ne ek important idea diya.
+
+Flow hona chahiye:
+
+User Topic
+↓
+Repo Validation
+↓
+Knowledge Derivation
+↓
+Draft Creation
+
+Not:
+
+User Topic
+↓
+Draft
+↓
+Validation
+
+Isse invalid drafts nahi banenge.
+
+6. Processor Flow Testing Framework
+
+debug_processor_flow.py bahut useful hai.
+
+Architecture recommendation:
+
+Create:
+
+tests/conversation/
+
+Example:
+
+topic flow
+approval flow
+resume flow
+pr flow
+
+LangGraph systems me ye bahut valuable hota hai.
+
+7. Knowledge Base Folder
+
+README me knowledge-driven architecture clearly visible hai.
+
+Main definitely add karunga:
+
+knowledge/
+├── validation_rules.json
+├── source_systems.json
+├── terraform_templates.json
+├── repo_patterns.json
+
+Agent directly knowledge load kare.
+
+JSON-driven validation engine ✅
+Knowledge-driven derivation engine ✅
+Source system registry ✅
+Persistent conversation state machine ✅
+Repo-first validation ✅
+Draft workspace versioning ✅
+Session resume/recovery ✅
+Conversation flow testing framework ✅
+Knowledge base abstraction layer ✅
+Single source of truth for Terraform templates ✅
+
+Aur sabse important baat:
+
+Ye documents mujhe "AI Chatbot" architecture se zyada "Rules Engine + Workflow Engine + Draft Workspace" architecture ki taraf push karte hain.
+
+MIF Infrastructure Copilot ko normal chatbot mat banao. Ye essentially:
+
+Knowledge Base
+      +
+Rules Engine
+      +
+LangGraph Workflow
+      +
+Draft Workspace
+      +
+PR Automation
+
+hona chahiye.
+
+
+1. Draft Workspace Snapshot / Undo System ✅ (Strongly Recommended)
+Ye sabse valuable addition hai.
+
+Idea:
+
+Draft V1
+   ↓
+Snapshot 1
+   ↓
+User Edit
+   ↓
+Snapshot 2
+   ↓
+User Edit
+   ↓
+Snapshot 3
+
+Agar user bole:
+
+undo last change
+
+to previous snapshot restore ho jaye.
+
+Ye feature bahut mature lag raha hai.
+
+2. Draft Freeze During PR Creation ✅
+Jab PR create ho raha ho:
+
+Status = PR_CREATING
+
+tab:
+
+Edit disable
+Add Job disable
+Undo disable
+
+Ye race condition prevent karta hai.
+
+MIF architecture me definitely include karna chahiye.
+
+3. Duplicate PR Protection ✅
+Agar user double click kare:
+
+Create PR
+Create PR
+Create PR
+
+to sirf ek PR create ho.
+
+Ye bahut useful production safeguard hai.
+
+4. Session Resume After Restart ✅
+Agar browser refresh ho jaye ya websocket reconnect ho jaye:
+
+Resume previous state
+
+Ye idea strong hai. Session persistence aur checkpoint recovery dono useful hain.
+
+5. Checkpoint Clear / New Session Reset ✅
+Current LangGraph systems me ye important hai.
+
+User bole:
+
+Start Over
+
+to:
+
+old graph state delete
+old checkpoint delete
+fresh conversation start
+
+Ye implementation rakhna chahiye.
+
+6. GitHub = Source of Truth Rule ✅
+Mujhe ye bahut accha laga.
+
+Knowledge Base kuch aur bole aur GitHub repo kuch aur bole to:
+
+GitHub wins
+
+Example:
+
+KB says source exists
+Repo says source not exists
+
+Final decision:
+
+source not exists
+
+Ye repo-first architecture ke liye perfect hai.
+
+7. Draft Change History ✅
+Har draft action track karo:
+
+Added locals.tf
+Added glue.tf
+Added Glue Job
+Updated Topic
+
+Future me audit aur undo dono easy ho jayenge.
+
+8. PR Preview Before Create PR ✅
+User ko final summary dikhao:
+
+Files Changed: 2
+locals.tf
+glue.tf
+
+Total Size
+Commit Message
+PR Title
+
+Phir PR create karo.
+
+Ye UX improve karega.
+
+9. Validation Rule IDs Architecture ✅
+Validation ko rule-based rakho:
+
+TR-001
+TR-002
+TR-003
+JR-001
+JR-002
+
+Hardcoded error strings mat rakho.
+
+Bahut scalable approach hai.
+
+10. Secret Management Pattern ✅
+API Keys aur GitHub Tokens:
+
+SecretStr
+
+ke through handle karo.
+
+Logs me kabhi secrets print na ho.
+
+Production-grade practice hai.
+
+Meri Final Recommendation
+
+Agar mujhe sirf Top 5 features pick karne ho jo main turant MIF Architecture me add karta:
+
+Snapshot + Undo System
+Draft Freeze During PR Creation
+Duplicate PR Protection
+GitHub as Source of Truth
+Session Resume + Checkpoint Recovery
+
+
+1. Diff Engine (HIGH VALUE) ✅
+
+Ye pehle list me nahi tha, lekin ab mujhe lagta hai include karna chahiye.
+
+Current flow:
+
+Draft Workspace
+     ↓
+Terraform Validation
+     ↓
+Create PR
+
+Better flow:
+
+Draft Workspace
+     ↓
+Diff Generation
+     ↓
+Review Screen
+     ↓
+Terraform Validation
+     ↓
+PR
+
+User ko dikh sakta hai:
+
+Files Added: 1
+Files Modified: 2
+
+saptcc/locals.tf
++ new glue job
+
+saptcc/glue.tf
++ new module block
+
+Ye ChangeSet, FileDiff, statistics model se aa raha hai.
+
+Strong recommendation: Add before PR screen.
+
+2. Draft Workspace State Machine ✅
+
+Tumhare architecture me draft hai, lekin yahan proper lifecycle hai:
+
+OPEN
+ ↓
+VALIDATED
+ ↓
+READY_FOR_PR
+ ↓
+MERGED
+
+Aur alternate:
+
+OPEN
+ ↓
+ABANDONED
+
+Bahut useful hai UI badges aur workflow control ke liye.
+
+3. Navigator State Persistence ✅
+
+Ye mujhe kaafi accha laga.
+
+Store:
+
+{
+  "current_step": "...",
+  "completed_steps": [],
+  "visited_steps": []
+}
+
+Agar browser refresh ho jaye:
+
+Resume from Step 7
+
+possible ho jayega.
+
+4. Session Export Feature ✅
+
+Useful for audit/debug.
+
+Export Session
+
+Output:
+
+{
+  session,
+  draft,
+  validations,
+  messages
+}
+
+EPAM enterprise projects me debugging ke liye kaafi useful hota hai.
+
+5. Snapshot Statistics Dashboard ✅
+
+Snapshot sirf undo ke liye nahi.
+
+Store:
+
+Total Snapshots
+Last Change
+Total Operations
+Created By
+
+Draft analytics mil jayegi.
+
+6. Explicit Action Cards Model ✅
+
+Message ke andar:
+
+{
+  "actions": [
+      {
+         "card_type": "approval"
+      }
+  ]
+}
+
+Mujhe ye bahut accha laga.
+
+Chat UI me:
+
+Terraform Validation Passed
+
+[ Review ]
+[ Approve ]
+[ Discard ]
+
+Ye future UI ko clean banayega.
+
+7. Auto Snapshot on Every Mutation ✅
+
+Jab bhi:
+
+Add Job
+Update File
+Delete Job
+Change Topic
+
+automatic snapshot create ho.
+
+Manual undo implementation se better hai.
+
+8. Cleanup Policies ✅
+
+Useful for long-running production system.
+
+Examples:
+
+Delete inactive sessions after X days
+Keep last 20 snapshots
+Archive PR-created sessions
+
+Ye tests me clearly visible hai.
+
+Jo cheezein mujhe include NAHI karni chahiye lagti
+❌ Agent System Prompt
+
+Ye old KB-driven agent hai.
+
+Tumhara current architecture:
+
+GitHub First
+Repository Navigator
+Draft Workspace
+LangGraph
+
+Ye zyada advanced hai.
+
+Old prompt repo access ke bina kaam karta hai.
+
+Include mat karo.
+
+❌ Known Source Systems JSON
+
+Hardcoded source list:
+
+saptcc
+saptce
+wahoo
+...
+
+Current architecture already GitHub repo scan karta hai.
+
+GitHub should remain source of truth.
+
+❌ Decision Tree Driven Conversation
+
+Bahut rigid hai.
+
+Step1
+Step2
+Step3
+Step4
+
+Tumne khud requirement di thi:
+
+Minimize user questions and infer defaults.
+
+Isliye ye approach include mat karo.
+
+Final Top Additions (Priority Order)
+P0 (Immediately Add)
+Diff Engine + ChangeSet Review
+Snapshot Engine + Undo
+Auto Snapshot on Every Change
+Navigator State Persistence
+Draft Lifecycle State Machine
+P1 (Next Sprint)
+Action Cards
+Session Export
+Snapshot Statistics
+Session Cleanup Policies
+P2 (Optional)
+Audit Timeline View
+Draft Analytics Dashboard
+
+P0 — Definitely Include
+1. Draft Freeze During PR Creation
+
+Tumhare current flow me ye bahut valuable hai.
+
+Review
+ ↓
+PR Creating
+ ↓
+Draft Frozen
+ ↓
+PR Created
+
+Jab PR create ho raha ho tab:
+
+add_file ❌
+add_glue_job ❌
+undo ❌
+
+allow na ho. Race conditions aur duplicate PR issues avoid honge.
+
+2. Duplicate PR Protection
+
+Bahut strong addition.
+
+User clicks Create PR
+User clicks Create PR again
+
+Second request block honi chahiye.
+
+Current file me:
+
+check_duplicate_pr_protection()
+
+already design kiya gaya hai.
+
+MIF production architecture me include karna chahiye.
+
+3. One PR = One Commit Rule
+
+Ye mujhe extremely valuable laga.
+
+Current MIF requirement bhi same direction me hai.
+
+Benefits:
+
+Clean audit trail
+Easy rollback
+Easy review
+
+PR me:
+
+1 commit
+2 files changed
+
+instead of:
+
+7 commits
+14 fixes
+
+GitHub review bahut simple ho jata hai.
+
+4. GitHub as Single Source of Truth
+
+Ye bahut important architectural principle hai.
+
+Current repo already is direction me hai.
+
+Source existence check:
+
+saptcc/locals.tf
+
+GitHub se verify ho.
+
+Not:
+
+KB
+JSON
+Hardcoded list
+
+GitHub wins. Always.
+
+5. Diff Preview Before PR
+
+Pehle bhi bola tha, lekin ab aur strong recommendation hai.
+
+User ko PR create karne se pehle dikhna chahiye:
+
+Files Modified: 2
+
+saptcc/locals.tf
++ new glue job
+
+saptcc/glue.tf
++ module update
+
+Aur impact summary:
+
+Risk: Medium
+Jobs affected: 1
+Files affected: 2
+
+Ye DiffEngineService ka best part hai.
+
+P1 — Strongly Recommended
+6. Preview Tree Diff
+
+PR create hone se pehle GitHub-style preview.
+
+Added:
+  saptcc/locals.tf
+
+Modified:
+  saptcc/glue.tf
+
+Total additions:
+  56 lines
+
+Ye review UX ko professional bana deta hai.
+
+7. Validation History
+
+Har validation run store karo.
+
+Validation #1 Failed
+Validation #2 Failed
+Validation #3 Passed
+
+Debugging me bahut useful.
+
+8. Impact Analysis
+
+Diff se:
+
+Low Risk
+Medium Risk
+High Risk
+
+generate karna.
+
+Delete operation ho:
+
+High Risk
+
+show karo.
+
+9. Session Restore
+
+Browser refresh:
+
+Resume Session
+Resume Draft
+Resume Navigator Step
+
+Current architecture me add karna worth hai.
+
+10. Snapshot Based Undo
+
+Ye mujhe ab bhi bahut strong feature lagta hai.
+
+User sees:
+
+Discard Last Change
+
+Backend:
+
+Snapshot Restore
+
+Professional UX.
+
+P2 — Good Enterprise Features
+11. Redis Locking Around PR Creation
+
+Agar multiple users same draft pe kaam kar sakte hain future me:
+
+PR Lock
+
+worth adding.
+
+12. Audit Trail
+
+Store:
+
+Who
+When
+What Changed
+PR Created
+Validation Failed
+
+Enterprise projects me kaafi useful.
+
+13. Session Cleanup Policies
+Archive old sessions
+Delete inactive drafts
+Keep last N snapshots
+
+Long-term maintainability ke liye.
+
+Include Mat Karna
+❌ Kafka Broker Validation
+
+Current Phase-1 requirement:
+
+Only topics_*.tf verification
+
+Kafka live broker check out of scope hai.
+
+❌ Schema Registry Validation
+
+Current Phase-1 me required nahi.
+
+❌ Secret Vault System
+
+AES encryption + secret rotation accha hai but current MIF scope me over-engineering hai. Future phase ke liye rakho.
+
+❌ Generic LLM Service Layer
+
+Current LangGraph architecture me already sufficient abstraction hai. Separate generic wrapper se zyada value nahi milegi.
+
+Agar mujhe sirf TOP 5 choose karne ho
+Draft Freeze + Duplicate PR Protection
+Diff Preview / ChangeSet Review Screen
+One PR = One Commit
+Snapshot Engine + Undo
+Session Restore + Navigator Restore
+
+
+
+1. Sabse valuable cheez: Session + Resume Architecture
+
+Tumhare current architecture me session restore hai, lekin uploaded implementation me bahut mature approach hai:
+
+Session token ownership validation
+Session reopen
+WebSocket reconnect
+LangGraph checkpoint restore
+Draft restore after disconnect
+
+Ye production-grade pattern hai. Particularly WebSocket reconnect flow aur checkpoint resume mujhe bahut strong laga.
+
+Recommendation: Keep this architecture.
+
+2. LangGraph State Machine bahut achhi hai
+
+Graph builder file dekhkar mujhe laga ki workflow ka sequencing kaafi mature hai:
+
+collect_topic
+→ kafka_validation
+→ derive_values
+→ source_check
+→ confirm
+→ sink
+→ workers
+→ validation
+→ summary
+→ terraform
+→ approval
+→ validate
+→ PR
+
+Aur important part:
+
+interrupt_before=[...]
+
+Human-in-the-loop pauses bahut cleanly defined hain.
+
+Ye directly tumhare MIF agent me use ho sakta hai.
+
+3. Knowledge Base Loader ko definitely adopt karo
+
+Knowledge Base Loader mujhe sabse reusable component laga.
+
+Current MIF architecture me:
+
+knowledge_base/
+project_information/
+
+already hai.
+
+Main exactly ye pattern use karta:
+
+KnowledgeService
+ ├─ validation_rules
+ ├─ source_systems
+ ├─ terraform_templates
+ ├─ repo_patterns
+ └─ defaults
+
+Hardcoded values avoid ho jayenge.
+
+4. Draft Workspace Concept Excellent hai
+
+Ye sabse bada improvement hai jo mujhe files me mila.
+
+Draft Workspace:
+
+Draft
+ ├─ files
+ ├─ glue jobs
+ ├─ snapshots
+ ├─ validations
+ └─ PR metadata
+
+State model aur repository design dono kaafi achhe hain.
+
+Current architecture me bhi draft workspace hai, lekin uploaded design zyada mature hai.
+
+5. Snapshot + Undo System
+
+Ye mujhe unexpectedly useful laga.
+
+Snapshot
+  ↓
+Diff
+  ↓
+Undo
+
+Snapshot Repository aur Diff Engine dono isi purpose ke liye banaye gaye hain.
+
+Agar future me user bole:
+
+Undo last change
+Restore previous version
+
+to ye architecture directly support karega.
+
+Main ise future roadmap me rakhunga.
+
+6. Chat Protocol Design Strong hai
+
+ChatMessage model aur Widget model kaafi clean hain.
+
+Particularly:
+
+TEXT_INPUT
+FORM
+SUMMARY
+VALIDATION
+CODE_PREVIEW
+APPROVAL
+PR_SUCCESS
+
+Ye reusable UI contract hai.
+
+Frontend-backend integration ke liye useful.
+
+7. Phase-2 Database Schema
+
+Ab important part.
+
+Kya adopt karna chahiye
+
+Drafts table ✔️
+
+DraftFiles ✔️
+
+Snapshots ✔️
+
+ValidationReports ✔️
+
+DraftGlueJobs ✔️
+
+Ye sab useful hain.
+
+Kya abhi mat lao
+
+Secrets table ❌
+
+Complex FK chains ❌
+
+Object-store pointers ❌
+
+Large audit model ❌
+
+Abhi Phase-1 ke liye overengineering hai.
+
+Mujhe jo Red Flags lage
+1. Too Many Tables
+
+Phase-2 schema bahut heavy ho jata hai.
+
+Current MIF scope ke hisab se:
+
+users
+sessions
+drafts
+draft_files
+draft_glue_jobs
+validation_reports
+pr_metadata
+
+enough hai.
+
+2. Diff Engine Abhi Premature
+
+Diff Engine ka design accha hai.
+
+Lekin current MIF scope me:
+
+single PR
+single commit
+
+hai.
+
+To full Git-style diff tracking abhi zaroori nahi.
+
+Roadmap item hai.
+
+3. Session Repository Duplication
+
+Mujhe kuch jagah duplicate storage patterns dikhe:
+
+LangGraph State
++
+Session Repository
++
+Draft Repository
+
+Ye carefully manage karna padega warna source-of-truth confusion ho sakta hai.
+
+Agar main tumhare architecture ko revise karu
+
+Main final architecture kuch aisa rakhunga:
+
+Frontend
+    ↓
+FastAPI
+    ↓
+LangGraph
+
+Nodes
+ ├─ Environment
+ ├─ Operation
+ ├─ Source
+ ├─ TopicValidation
+ ├─ DuplicateValidation
+ ├─ KnowledgeDerivation
+ ├─ DraftWorkspace
+ ├─ Review
+ ├─ TerraformValidation
+ └─ PRCreation
+
+Services
+ ├─ GitHubService
+ ├─ KnowledgeService
+ ├─ ValidationService
+ ├─ DraftWorkspaceService
+ └─ TerraformValidator
+
+Storage
+ ├─ PostgreSQL
+ ├─ Redis
+ └─ LangGraph Checkpoints
+
+Knowledge
+ ├─ validation_rules.json
+ ├─ source_systems.json
+ ├─ terraform_templates.json
+ └─ repo_patterns.json
+Overall Verdict
+
+Files me se 3 cheeze sabse valuable nikli:
+
+Knowledge Base Loader Architecture
+Draft Workspace + Snapshot Model
+LangGraph Interrupt-Based Workflow Design
+
+
+abse important finding
+
+Ye implementation traditional wizard/workflow based system hai, not a true AI Copilot.
+
+Flow fixed hai:
+
+collect_topic
+→ check_kafka_topic
+→ derive_values
+→ check_source_system
+→ confirm_derived
+→ collect_sink
+→ collect_workers
+→ run_validation
+→ show_summary
+→ generate_terraform
+→ terraform_preview
+→ validate_terraform
+→ create_pr
+
+Ye almost completely deterministic flow hai.
+
+Jo cheeze mujhe bahut achhi lagi
+1. Repository First Validation
+
+Ye bahut strong design decision hai.
+
+check_kafka_topic.py me:
+
+Repository = Authoritative Source
+Kafka = Informational Only
+Schema Registry = Informational Only
+
+Topic approval repository se hota hai.
+
+Kafka down ho to bhi workflow continue karta hai.
+
+Main definitely adopt karunga
+
+Tumhare current architecture me bhi:
+
+confluent_minerva_dev/topics_*.tf
+
+source of truth hai.
+
+Ye bilkul correct approach hai.
+
+2. Existing Source System → Only locals.tf
+
+Ye bahut valuable business rule hai.
+
+terraform_preview.py
+
+Existing source:
+    modify locals.tf only
+
+New source:
+    create locals.tf
+    create glue.tf
+
+Ye exact repo behavior hai.
+
+Isko architecture document me explicitly add karna chahiye.
+
+3. glue.tf Never Changes
+
+Ye bhi strong finding hai.
+
+glue.tf
+for_each = local.glue_jobs
+
+Existing source system ke liye glue.tf modify nahi hota.
+
+Bahut important business rule hai.
+
+4. Repository Validation Before Kafka Validation
+
+Current implementation:
+
+GitHub Repo
+    ↓
+Kafka
+    ↓
+Schema Registry
+
+not
+
+Kafka
+    ↓
+GitHub
+
+Ye mujhe correct laga.
+
+Jo cheeze mujhe weak lagi
+1. Too Many UI Nodes
+
+Example:
+
+collect_sink
+collect_workers
+confirm_derived
+show_summary
+
+Ye sab separate nodes hain.
+
+Tumhare chat-first architecture ke liye ye overkill hai.
+
+Main:
+
+KnowledgeDerivation Node
+↓
+Review Workspace
+
+rakhta.
+
+2. Derive Values User Editable Bana Diye
+
+derive_values.py
+
+job_key
+kafka_secret_name
+
+editable form me diye gaye hain.
+
+Mujhe ye dangerous laga.
+
+Ye values derived honi chahiye.
+
+User edit karega to governance issues aa sakte hain.
+
+Main:
+
+read only
+
+rakhta.
+
+3. Validation Hidden Hai
+
+run_validation.py
+
+messages=[]
+
+validation UI me dikhayi hi nahi ja rahi.
+
+Mujhe ye pasand nahi aaya.
+
+Review screen me validation findings visible honi chahiye.
+
+4. PR Creation Safety Weak Hai
+
+Code bolta hai:
+
+only block if status == failed
+
+means:
+
+None
+pending
+unknown
+
+par bhi PR create ho sakta hai.
+
+Main yeh karunga:
+
+terraform_validation_status == "passed"
+
+mandatory.
+
+Sabse Important Architecture Change
+
+Uploaded implementation:
+
+Workflow Driven
+
+Tumhari architecture:
+
+Draft Workspace Driven
+
+Main 100% Draft Workspace Driven architecture choose karunga.
+
+Example
+
+Old:
+
+Topic
+↓
+Workers
+↓
+Summary
+↓
+Terraform
+↓
+PR
+
+New:
+
+Topic
+↓
+Knowledge Derivation
+↓
+Draft Workspace Created
+↓
+User Edit Anything
+↓
+Validation
+↓
+PR
+
+Ye zyada scalable hai.
+
+Final Verdict
+
+In uploaded node files se mujhe 5 business rules mili jo current architecture me zaroor honi chahiye:
+
+Adopt Immediately
+
+✅ Repository is authoritative source
+
+✅ Existing source → modify only locals.tf
+
+✅ Existing source → never touch glue.tf
+
+✅ New source → create locals.tf + glue.tf
+
+✅ Repository validation before Kafka validation
+
+Do NOT Adopt
+
+❌ Too many wizard-style form nodes
+
+❌ Editable derived values
+
+❌ Hidden validations
+
+❌ Weak PR validation gate
+
+
+Jo definitely freeze ho chuka hai
+
+✅ Knowledge Layer
+
+✅ RepositoryKnowledgeProvider
+
+✅ Source Of Truth Strategy
+
+✅ Derivation Strategy
+
+✅ Node Order
+
+✅ Validation Strategy
+
+✅ Template Strategy
+
+✅ Existing Source System → Repository SoT
+
+✅ New Source System → KB Bootstrap SoT
+
+✅ Repository Facts + KB Rules Derivation
+
+✅ Validation Rules → KB Driven
+
+✅ Template Selection → TemplateDeriver
+
+✅ Source System Registry → SourceSystemModel
+
+✅ Review → Validation → Review → PR routing
+
+✅ Draft Workspace Architecture
+
+✅ Session Persistence
+
+✅ Session Recovery
+
+✅ One PR = One Commit
+
+✅ GitHub OAuth
+
+✅ Conflict Resolution
+
+✅ Out-of-Scope Question Node
+
+Aur jo old architecture se liya gaya aur mujhe lagta hai freeze hona chahiye
+
+Ye sab architecture-level concepts hain aur mujhe lagta hai inhe officially architecture me include karna chahiye:
+
+Draft & Snapshot
+
+✅ Draft as Single Source Of Truth
+
+✅ One Session = One Active Draft
+
+✅ Immutable Snapshots
+
+✅ Auto Snapshot on Every Mutation
+
+✅ Draft ↔ Snapshot Linkage
+
+✅ Snapshot Restore
+
+Review & PR
+
+✅ Review Workspace Authoritative Before PR
+
+✅ PR Generated Only From Review Workspace
+
+✅ One PR = One Commit
+
+✅ Exclusive PR Creation
+
+✅ Duplicate PR Protection
+
+✅ Draft Freeze During PR Creation
+
+Validation
+
+✅ Repository First Validation
+
+✅ Topic Validation Before Draft Creation
+
+✅ Duplicate Glue Job Validation
+
+✅ Terraform Validation Mandatory Before PR
+
+Session
+
+✅ Session Recovery
+
+✅ Draft Recovery
+
+✅ Navigator Recovery
+
+✅ Session History Grouping
+
+✅ ChatGPT-style Session Sidebar
+
+State Machine
+
+✅ Draft Lifecycle
+
+DRAFT_EDITING
+↓
+REVIEW_READY
+↓
+PR_CREATING
+↓
+PR_CREATED
+
+or
+
+ABANDONED
+Knowledge Layer
+
+✅ source_systems.json concept
+
+✅ validation_rules.json concept
+
+✅ terraform_templates.json concept
+
+✅ repo_patterns.json concept
+
+✅ Knowledge Loader concept
+
+✅ JSON-driven validation
+
+✅ Knowledge-driven derivation
+
+Security
+
+✅ Secret Abstraction Layer
+
+✅ Audit Logging
+
+✅ Secret references instead of raw secrets
+
+Jo adopt karna chahiye
+High Value
+
+✅ Snapshot Engine
+
+✅ Undo / Restore
+
+✅ Validation History
+
+✅ Audit Trail
+
+✅ Session Resume
+
+✅ Draft Change History
+
+✅ PR Preview
+
+✅ Validation Rule IDs
+
+Example:
+
+TR-001
+TR-002
+JR-001
+JR-002
+
+Ye bahut scalable pattern hai.
+
+Jo mujhe lagta hai architecture me ADD karna chahiye
+Existing Source Rule
+
+Bahut important business rule mila tha:
+
+Existing Source
+    →
+Modify locals.tf only
+Existing Source
+glue.tf
+never modified
+New Source
+Create locals.tf
+Create glue.tf
+
+Ye mujhe architecture document me explicitly chahiye.
+
+Repository Validation Order
+Repository Check
+↓
+Knowledge Derivation
+↓
+Draft Creation
+
+Not:
+
+Draft
+↓
+Validation
+
+Ye bhi include karna chahiye.
+
+Jo include NAHI karna chahiye
+
+❌ Wizard-style conversation
+
+collect_sink
+collect_workers
+confirm_derived
+show_summary
+
+Tumhara architecture GPT-style hai.
+
+Ye include nahi karna.
+
+❌ User editable derived values
+
+Example:
+
+job_name
+secret_name
+checkpoint_path
+
+Ye derived hone chahiye.
+
+Editable nahi.
+
+❌ Kafka broker validation
+
+Phase-1 me nahi.
+
+Only:
+
+confluent_minerva_dev/topics_*.tf
+
+validation.
+
+❌ Schema Registry validation
+
+Phase-1 me nahi.
+
+❌ Generic LLM wrapper architecture
+
+Need nahi.
+
+Final Status
+
+Mere hisab se architecture freeze set ab kuch aisa hai:
+
+Core Freeze
+
+PASS ✅
+
+Knowledge Layer Freeze
+
+PASS ✅
+
+RepositoryKnowledgeProvider Freeze
+
+PASS ✅
+
+Source Of Truth Freeze
+
+PASS ✅
+
+Derivation Freeze
+
+PASS ✅
+
+Validation Freeze
+
+PASS ✅
+
+Template Freeze
+
+PASS ✅
+
+Draft Workspace Freeze
+
+PASS ✅
+
+Snapshot Architecture Freeze
+
+PASS ✅
+
+Session Recovery Freeze
+
+PASS ✅
+
+Review Workspace Freeze
+
+PASS ✅
+
+PR Creation Freeze
+
+PASS ✅
+
+Audit & Security Principles Freeze
+
+PASS ✅
+
+Existing/New Source System Rules Freeze
+
+PASS ✅
+
+Ab mere hisab se architecture side par koi major concept pending nahi hai.
+
+Ab jo next freeze bacha hai wo concept freeze nahi hai.
+
+Next actual work hai:
+
+Step-4 → Project Structure Freeze
+
+Jahan hum decide karenge:
+
+backend/
+frontend/
+knowledge/
+graph/
+services/
+repositories/
+tests/
+
+ka final folder structure kya hoga.
+
+o mujhe bahut accha laga
+
+Ye sab freeze ho gaya:
+
+Node Order
+GitHubOAuthNode
+↓
+SessionManagerNode
+↓
+EnvironmentNode
+↓
+OperationNode
+↓
+SourceTypeNode
+↓
+Kafka/JDBC/FlatFile/APINode
+↓
+SourceSystemNode
+↓
+SchemaGrainNode
+↓
+TopicGenerationNode
+↓
+TopicValidationNode
+↓
+KnowledgeDerivationNode
+↓
+DraftWorkspaceNode
+↓
+ReviewWorkspaceNode
+↓
+TerraformValidationNode
+↓
+FinalConfirmationNode
+↓
+PRCreationNode
+↓
+SessionPersistNode
+
+PASS ✅
+
+Validation Routing
+Draft
+↓
+Review
+↓
+TerraformValidation
+↓
+Review
+↓
+FinalConfirmation
+↓
+PR
+
+PASS ✅
+
+Snapshot Rules
+Auto Snapshot
+Immutable Snapshot
+Restore
+Undo
+
+PASS ✅
+
+Session Recovery
+Resume Session
+Resume Draft
+Resume Navigator
+
+PASS ✅
+
+PR Protection
+One Draft
+↓
+One Commit
+↓
+One PR
+
+PASS ✅
+
+Duplicate PR Protection
+
+PASS ✅
+
+Draft Freeze During PR
+
+PASS ✅
+
+Knowledge Layer Boundary
+Node
+↓
+KBS
+↓
+RKP
+↓
+Loaders
+↓
+Parsers
+
+PASS ✅
+
+Current Freeze Status
+Foundation
+
+✅ Knowledge Layer Freeze
+
+✅ RepositoryKnowledgeProvider Freeze
+
+✅ Source Of Truth Freeze
+
+✅ Derivation Freeze
+
+✅ Validation Freeze
+
+✅ Template Freeze
+
+LangGraph
+
+✅ Node Order Freeze
+
+✅ One Node = One Responsibility
+
+✅ Topic Validation Flow
+
+✅ KnowledgeDerivation Flow
+
+✅ Draft Flow
+
+✅ Review Flow
+
+✅ PR Flow
+
+Draft Architecture
+
+✅ Draft Workspace Source Of Truth
+
+✅ Review Workspace Authoritative
+
+✅ Immutable Snapshots
+
+✅ Auto Snapshot On Mutation
+
+✅ Snapshot Restore
+
+✅ Draft ↔ Snapshot Linkage
+
+Session Architecture
+
+✅ One Session = One Active Draft
+
+✅ Session Recovery
+
+✅ Draft Recovery
+
+✅ Navigator Recovery
+
+✅ Session History
+
+✅ ChatGPT Style Sidebar
+
+PR Architecture
+
+✅ One Draft → One Commit → One PR
+
+✅ Duplicate PR Protection
+
+✅ Draft Freeze During PR Creation
+
+✅ Exclusive PR Creation
+
+Business Rules
+
+✅ Existing Source → locals.tf only
+
+✅ Existing Source → glue.tf untouched
+
+✅ New Source → locals.tf + glue.tf
+
+✅ Repository First Validation
+
+✅ Topic Validation Before Draft Creation
+
+✅ Kafka Broker Validation Out Of Scope
+
+✅ Schema Registry Validation Out Of Scope
+
+Derived Values
+
+✅ Derived Values Generated By Agent
+
+✅ Derived Values Editable
+
+✅ Draft Freeze After PR Creation Starts
+
+
+Implementation later.
+STEP-10 → Database Domain Model & Persistence Architecture Freeze.
+---------------------------------------------------
+
+
+
 
 # Glue job terraform job script/entry creation process ( step-by-step )
 - The goal is to collect the required parameters and generate a consistent Terraform job entry.
@@ -2600,3 +5304,1081 @@ module "glue_jobs" {
   secretsmanager_secret_name = lookup(lookup(each.value, "glue_job_arguments", null), "--cc_secret_name", null)
 }
 ```
+
+
+
+Isme freeze karo:
+
+RBAC detailed matrix
+Multi-tenant readiness
+CI/CD governance
+Architecture compliance gates
+Registry governance
+SRE runbooks
+Security audit model
+Admin operations model
+Incident management model
+Change management model
+
+
+STEP-12
+
+Actual Implementation
+
+Aur implementation bhi roadmap ke according:
+
+Phase-1
+
+Foundation
+
+project bootstrap
+FastAPI
+React
+PostgreSQL
+Redis
+Auth
+Phase-2
+
+Database Layer
+
+19 tables
+repositories
+migrations
+Phase-3
+
+Knowledge Layer
+
+RKP
+KBS
+registries
+derivers
+Phase-4
+
+LangGraph
+
+18 nodes
+state model
+routing
+Phase-5
+
+API Layer
+
+Phase-6
+
+Frontend
+
+Phase-7
+
+Validation + Review
+
+Phase-8
+
+PR Creation
+
+Phase-9
+
+Observability + Security
+
+Phase-10
+
+Production Readiness Testing
+
+Freeze architecture intact hai ya nahi
+Koi business rule lose to nahi hua
+Koi merge/revert ke chakkar me architecture drift to nahi aa gaya
+Koi duplicate structure ya wrong reference to nahi bacha
+Step-1 se Step-11.4 tak jo freeze hua tha wo abhi bhi valid hai ya nahi
+Existing Source Rule preserve hai ya nahi
+Repository First Validation preserve hai ya nahi
+Draft Workspace architecture preserve hai ya nahi
+Session Recovery preserve hai ya nahi
+PR Protection preserve hai ya nahi
+Knowledge Layer preserve hai ya nahi
+LangGraph node order preserve hai ya nahi
+Source Of Truth model preserve hai ya nahi
+
+
+Step-1 Discovery Freeze
+Step-2 Architecture Freeze
+Step-3 Database Freeze
+Step-4 Project Structure Freeze
+Step-5 LangGraph Freeze
+Step-5.1 Business Rules Freeze
+Step-6 API Contract Freeze
+Step-6.1 DTO Freeze
+Step-7 Frontend Freeze
+Step-7.1 Component Contract Freeze
+Step-8 Knowledge Layer Freeze
+Step-9 State Model Freeze
+Step-9.1 Gap Closure Freeze
+Step-9.2 Repository Knowledge Freeze
+Step-10 Database Domain Freeze
+Step-11 Planning Freeze
+Step-11.1 Architecture Audit Freeze
+Step-11.2 Production Freeze
+Step-11.3 Governance Freeze
+Step-11.4 Gap Closure Freeze
+
+
+-----------------------
+Architecture Work:
+✅ 100% complete
+
+Folder Bootstrap:
+✅ Mostly complete
+
+Actual Backend Implementation:
+❌ Not proven
+
+Actual Frontend Implementation:
+❌ Not proven
+
+Actual Tests:
+❌ Not proven
+
+Production Readiness:
+❌ Not proven
+
+Phase-1 Completion:
+❌ Reject until evidence provided
+
+❌ kisi folder ke andar actual files visible nahi hain
+
+❌ github_oauth.py visible nahi hai
+
+❌ session.py visible nahi hai
+
+❌ auth.py visible nahi hai
+
+❌ health.py visible nahi hai
+
+❌ user.py visible nahi hai
+
+❌ session.py model visible nahi hai
+
+❌ repository implementations visible nahi hain
+
+❌ test files visible nahi hain
+
+❌ CI workflow files visible nahi hain
+
+❌ .env.example visible nahi hai
+
+❌ docker-compose.yml visible nahi hai
+
+Abhi koi evidence nahi mila:
+
+❌ Database layer
+
+❌ Alembic migrations
+
+❌ User model
+
+❌ Session model
+
+❌ Repository layer
+
+❌ Session service
+
+❌ OAuth service
+
+❌ API endpoints
+
+❌ Integration tests
+
+❌ Health endpoint
+
+❌ FastAPI app
+
+❌ Redis implementation
+
+❌ PostgreSQL implementation
+
+❌ SQLAlchemy Engine
+
+❌ PostgreSQL Session Manager
+
+❌ Alembic
+
+❌ User ORM
+
+❌ Session ORM
+
+❌ Repository Layer
+
+❌ OAuth Service
+
+❌ FastAPI App
+
+❌ Health Endpoint
+
+❌ Integration Tests
+
+❌ Redis Client
+Ab tumhare paas freeze ho chuka hai:
+
+✅ Step-1 Discovery
+
+✅ Step-2 Architecture
+
+✅ Step-3 Database
+
+✅ Step-4 Project Structure
+
+✅ Step-5 API Contracts
+
+✅ Step-6 Frontend
+
+✅ Step-7 Roadmap
+
+✅ Step-8 Bootstrap
+
+✅ Step-8.3 Knowledge Layer
+
+✅ Step-9 LangGraph State Model
+
+Ab implementation shuru karne se pehle ek hi architecture step bachta hai:
+
+STEP-9.1
+LangGraph State Gap Closure & Final Freeze
+
+Isme sirf:
+
+1. Remove KnowledgeState
+
+2. Simplify node_history
+
+3. Freeze validation routing
+
+4. Rename workspace.defaults → derived_values
+
+5. Final PASS
+
+Uske baad directly:
+
+STEP-10
+Database Implementation Freeze & Build Plan
+
+aur phir actual coding start kar sakte ho.
+
+Meri recommendation:
+
+STEP-9.1 (small gap closure)
+↓
+STEP-10 Database Implementation Freeze
+↓
+Actual implementation start
+STEP-9.2
+Repository = Source Of Truth
+Aur
+Knowledge Base se values derive hongi.
+Repository Knowledge Model &
+Derived Value Mapping Freeze
+⬅ NEXT
+
+STEP-10
+Database Implementation Planning
+
+STEP-11
+Actual Implementation Start
+
+
+
+Step-1  Discovery Freeze
+Step-2  Architecture Freeze
+Step-3  Database Design Freeze
+Step-4  Project Structure Freeze
+Step-5  LangGraph Structure Freeze
+Step-5.1 Business Rules Freeze
+Step-6  API Contract Freeze
+Step-6.1 API Payload & DTO Freeze
+Step-7  Frontend Structure Freeze
+Step-7.1 Frontend Component Contract Freeze   ← NEXT
+
+Then
+
+Step-8  Knowledge Layer Verification
+Step-9  LangGraph State Model Verification
+Step-9.1 LangGraph Gap Closure
+Step-9.2 Repository Knowledge Model & Derived Value Mapping Freeze
+Step-10 Database Domain Model & Persistence Architecture Freeze
+Step-11 Implementation Planning
+Step-12 Actual Implementation
+
+
+Step-1  Discovery Freeze                ✅
+Step-2  Architecture Freeze             ✅
+Step-3  Database Design Freeze          ✅
+Step-4  Project Structure Freeze        ✅
+Step-5  LangGraph Structure Freeze      ✅
+Step-5.1 Business Rules Freeze          ✅
+Step-6  API Contract Freeze             ✅
+Step-6.1 DTO Freeze                     ✅
+Step-7  Frontend Structure Freeze       ✅
+Step-7.1 Component Contract Freeze      ✅
+
+NEXT
+
+Step-8  Knowledge Layer Verification & Freeze
+
+Step-9  LangGraph State Model Verification
+
+Step-9.1 LangGraph Gap Closure
+
+Step-9.2 Repository Knowledge Model &
+         Derived Value Mapping Final Freeze
+
+STEP-10  Database Domain Model & Persistence Architecture Freeze
+↓
+STEP-11
+Implementation Planning &
+Build Order Freeze
+
+↓
+
+STEP-11.1
+Verification Gates Freeze
+
+
+STEP-11.1  Architecture Final Audit
+
+STEP-11.2  Production Operations &
+           Deployment Freeze
+
+STEP-11.3  Testing, Quality Gates &
+           Release Governance Freeze
+
+STEP-12    Actual Implementation
+
+Step 5 → LangGraph Structure Freeze
+Step 6 → API Contract Freeze
+Step 7 → Frontend Structure Freeze
+Step 8 → Implementation Roadmap Freeze
+
+
+jab last time mene tujhe jab old arcticute ko nhi diya tha ham yha per de yadi h na tujhe to ye bata yaha se to nhi karna abhi kuchh = 
+STEP-10 → Database Domain Model & Persistence Architecture Freeze.
+
+
+
+
+
+
+
+
+7. Existing Source Rule
+
+Preserved? → PARTIAL ⚠️
+
+Yaha dikkat hai.
+
+STEP-6 API output me ye business rule mention nahi hua:
+
+Existing Source
+    -> locals.tf onlyac
+
+Existing Source
+    -> glue.tf never modified
+
+New Source
+    -> create locals.tf
+
+New Source
+    -> create glue.tf
+
+Ye API layer ka part nahi hai.
+
+Ye STEP-5.1 Business Rule Freeze me locked hai.
+
+Lekin future implementation me:
+
+KnowledgeDerivationService
++
+DraftWorkspaceService
+
+ko enforce karna padega.
+
+Not a blocker.
+
+Bas note kar lo.
+
+Dekh yha tak hamara kam complete hoke freeze bas kiya hua tha hamne puri purani history ko check kar pura ka pura har ek chij check kar or dekh ke yha tak ham Pehle freeze kar chuke the arcticture ko agar mere se kuchh chhut rha ho jo ho gya tha frreze ya mene kuchh extra include kar diya ho to use bhi indetify kar har ek point and letter and word history se check kar then dekh yha tak sayad tak completlly freeze ho chuka tha arcticture hamara ---> 
+
+Mere hisab se current status
+Step-9.1
+
+PASS ✅
+
+Step-9.2
+
+PASS ✅
+
+Step-9.3
+
+PASS ✅
+
+Knowledge Layer
+
+PASS ✅
+
+RepositoryKnowledgeProvider
+
+PASS ✅
+
+Source Of Truth Strategy
+
+PASS ✅
+
+Derivation Strategy
+
+PASS ✅
+
+Node Order
+
+PASS ✅
+
+Validation Strategy
+
+PASS ✅
+
+Template Strategy
+
+PASS ✅
+
+
+Kya kuch aur freeze karna baaki hai?
+
+Meri review ke hisab se:
+
+NO MAJOR CONCEPT LEFT ❌
+
+Jo old repo se valuable tha:
+
+source_systems registry ✅
+validation registry ✅
+template registry ✅
+decision trees ✅
+derivation engine ✅
+repo-first philosophy ✅
+KB bootstrap philosophy ✅
+terraform generation pipeline ✅
+RepositoryKnowledgeProvider ✅
+provenance concept ✅
+
+Sab freeze ho chuka hai.
+
+
+uske bad mene tujhe apne purane project ki files deni start kar di thi yad h na jisse tune mujhe kuchh suggestion diye the ye chije hame add karna or kon si chije hame add nhi karne h apne currect arctictue me ha na to jo bhi tune suggestion diye the upper unko check kar apni history me orr eske elava jo bhi tune purane project se jo bhi suggestion diye the unko sab ko mene ek file me attached karke tujhe diya h upper to tujhe suggestion ko -
+history + jo mene file di h bha se check karna h ok har ek word and letter you need to undersatand in depth ok
+
+ha dekh ab me tujhe sab kuchh bata chuka hu ki kaha tak ho gya tha tune bhi check kar liya h history me + mene tere suggestion bhi file me add karke de diye h + tune apni history me check kar liye h old project se jo ham new project me dal rhe h bo sab suggestions ko
+
+
+****************************
+Thik h ab mene tujhe sab bata diya h ab next ham aage step by step processed karege to batao aage kese ham step by step kya karna h implementation + validateion + testing + freeze + anything that you want give me the steps then ham step 1 se chale karege ok or keval jab step end ho jayegi tabhi keval ham step 2 per jayege ok
+***************************
+
+
+
+ur jo old architecture se liya gaya aur mujhe lagta hai freeze hona chahiye
+
+Ye sab architecture-level concepts hain aur mujhe lagta hai inhe officially architecture me include karna chahiye:
+
+Draft & Snapshot
+
+✅ Draft as Single Source Of Truth
+
+✅ One Session = One Active Draft
+
+✅ Immutable Snapshots
+
+✅ Auto Snapshot on Every Mutation
+
+✅ Draft ↔ Snapshot Linkage
+
+✅ Snapshot Restore
+
+Review & PR
+
+✅ Review Workspace Authoritative Before PR
+
+✅ PR Generated Only From Review Workspace
+
+✅ One PR = One Commit
+
+✅ Exclusive PR Creation
+
+✅ Duplicate PR Protection
+
+✅ Draft Freeze During PR Creation
+
+Validation
+
+✅ Repository First Validation
+
+✅ Topic Validation Before Draft Creation
+
+✅ Duplicate Glue Job Validation
+
+✅ Terraform Validation Mandatory Before PR
+
+Session
+
+✅ Session Recovery
+
+✅ Draft Recovery
+
+✅ Navigator Recovery
+
+✅ Session History Grouping
+
+✅ ChatGPT-style Session Sidebar
+
+State Machine
+
+✅ Draft Lifecycle
+
+DRAFT_EDITING
+↓
+REVIEW_READY
+↓
+PR_CREATING
+↓
+PR_CREATED
+
+or
+
+ABANDONED
+Knowledge Layer
+
+✅ source_systems.json concept
+
+✅ validation_rules.json concept
+
+✅ terraform_templates.json concept
+
+✅ repo_patterns.json concept
+
+✅ Knowledge Loader concept
+
+✅ JSON-driven validation
+
+✅ Knowledge-driven derivation
+
+Security
+
+✅ Secret Abstraction Layer
+
+✅ Audit Logging
+
+✅ Secret references instead of raw secrets
+
+Jo adopt karna chahiye
+High Value
+
+✅ Snapshot Engine
+
+✅ Undo / Restore
+
+✅ Validation History
+
+✅ Audit Trail
+
+✅ Session Resume
+
+✅ Draft Change History
+
+✅ PR Preview
+
+✅ Validation Rule IDs
+
+Example:
+
+TR-001
+TR-002
+JR-001
+JR-002
+
+Ye bahut scalable pattern hai.
+
+Jo mujhe lagta hai architecture me ADD karna chahiye
+Existing Source Rule
+
+Bahut important business rule mila tha:
+
+Existing Source
+    →
+Modify locals.tf only
+Existing Source
+glue.tf
+never modified
+New Source
+Create locals.tf
+Create glue.tf
+
+Ye mujhe architecture document me explicitly chahiye.
+
+Repository Validation Order
+Repository Check
+↓
+Knowledge Derivation
+↓
+Draft Creation
+
+Not:
+
+Draft
+↓
+Validation
+
+Ye bhi include karna chahiye.
+
+Jo include NAHI karna chahiye
+
+❌ Wizard-style conversation
+
+collect_sink
+collect_workers
+confirm_derived
+show_summary
+
+Tumhara architecture GPT-style hai.
+
+Ye include nahi karna.
+
+❌ User editable derived values
+
+Example:
+
+job_name
+secret_name
+checkpoint_path
+
+Ye derived hone chahiye.
+
+Editable nahi.
+
+❌ Kafka broker validation
+
+Phase-1 me nahi.
+
+Only:
+
+confluent_minerva_dev/topics_*.tf
+
+validation.
+
+❌ Schema Registry validation
+
+Phase-1 me nahi.
+
+❌ Generic LLM wrapper architecture
+
+Need nahi.
+
+Final Status
+
+Mere hisab se architecture freeze set ab kuch aisa hai:
+
+Core Freeze
+
+PASS ✅
+
+Knowledge Layer Freeze
+
+PASS ✅
+
+RepositoryKnowledgeProvider Freeze
+
+PASS ✅
+
+Source Of Truth Freeze
+
+PASS ✅
+
+Derivation Freeze
+
+PASS ✅
+
+Validation Freeze
+
+PASS ✅
+
+Template Freeze
+
+PASS ✅
+
+Draft Workspace Freeze
+
+PASS ✅
+
+Snapshot Architecture Freeze
+
+PASS ✅
+
+Session Recovery Freeze
+
+PASS ✅
+
+Review Workspace Freeze
+
+PASS ✅
+
+PR Creation Freeze
+
+PASS ✅
+
+Audit & Security Principles Freeze
+
+PASS ✅
+
+Existing/New Source System Rules Freeze
+
+PASS ✅
+
+Sirf 2 Choti Observations
+Observation 1
+
+Copilot ne ye APIs rakhi hain:
+
+POST /drafts
+POST /pr
+POST /validation/request
+
+Aur saath me bola:
+
+Agent First Architecture
+
+Ye contradictory nahi hai.
+
+Lekin implementation ke time freeze karna hoga:
+
+Preferred Flow
+Frontend
+→ /agent/message
+
+Agent
+→ internally
+→ Draft Service
+→ Validation Service
+→ PR Service
+
+Frontend directly /pr ya /validation/request hit na kare.
+
+Ye endpoints internal/support endpoints hi rehne chahiye.
+
+Abhi architecture nahi toot raha.
+
+Bas Step-6 me note kar lena.
+
+Above output ko indepth read kar understand kar clear tarike se ki copilot kya kehna chah rha h orr pata laga kahi bhi freeze arcticure ya goal tut to nhi rha h na and pura ka pura read karne ke bad hi response ko generate kar bata next stemp me kya karna h 
+
+
+
+
+Reason:
+
+10,000+ users ke scale par:
+
+Memory blow-up
+Stale data
+Multiple copies of truth
+Cache invalidation nightmare
+Recovery inconsistency
+
+Production systems me pattern hota hai:
+
+KnowledgeState
+    ↓
+references only
+
+kb_version
+rule_set_version
+template_version
+registry_version
+provenance_reference
+knowledge_context_id
+
+Aur actual data:
+
+Repository
+Knowledge Registries
+KBS Cache
+Database
+
+me rahta hai.
+
+Production-grade ≠ state me sab kuchh bhar dena.
+Production-grade = authoritative ownership + references + recoverability.
+1. Non Functional Requirements (NFR) Freeze
+
+Audit me bola gaya:
+
+Rate limits TBD
+RTO/RPO TBD
+Alert thresholds TBD
+SLO/SLA TBD
+
+Production me ye bahut important hai.
+
+Example:
+
+API latency target
+Validation latency target
+PR creation latency target
+Max concurrent sessions
+Cache TTL
+RTO
+RPO
+
+Ye architecture nahi todta but production readiness ka part hai.
+
+2. Deployment & Infrastructure Freeze
+
+Abhi architecture freeze ho gaya.
+
+Lekin ye freeze nahi hua:
+
+Kubernetes topology
+Redis HA strategy
+PostgreSQL HA strategy
+Backup topology
+Secrets management architecture
+CI/CD architecture
+Environment promotion flow
+
+Dev → Test → Prod
+
+10K users ke liye ye important hai.
+
+3. Test Strategy Freeze
+
+Abhi implementation roadmap hai.
+
+But freeze nahi hua:
+
+Unit testing rules
+Integration testing rules
+Contract testing
+DTO compatibility testing
+Load testing
+Recovery testing
+Chaos testing
+
+Production automation ke liye ye bhi important hai.
+
+
+
+
+
+
+file actually exist karti hai?
+endpoint actually implemented hai?
+node actually coded hai?
+DTO actually present hai?
+registry JSON actual repo me hai?
+migration actual bani hui hai?
+RBAC code me enforce hai?
+
+
+
+Maine tumhara poora message read kar liya hai. Is stage par main implementation ya architecture judgement nahi de raha hoon, kyunki tumne specifically bola hai ki pehle sab context absorb karna hai aur next questions isi context se honge.
+
+Jo maine capture kiya hai (high-level)
+Freeze Status (Latest Authority)
+
+Ye items effectively freeze/pass state me hain:
+
+Discovery Freeze
+Architecture Freeze
+Database Design Freeze
+Project Structure Freeze
+LangGraph Structure Freeze
+Business Rules Freeze
+API Contract Freeze
+DTO Freeze
+Frontend Structure Freeze
+Frontend Component Contract Freeze
+Knowledge Layer Freeze
+RepositoryKnowledgeProvider Freeze
+Source of Truth Strategy Freeze
+Derivation Strategy Freeze
+Validation Strategy Freeze
+Template Strategy Freeze
+LangGraph State Freeze
+Repository Knowledge Model Freeze
+Database Domain Model Freeze
+Implementation Planning Freeze
+Architecture Audit Freeze
+Production Operations Freeze
+Testing & Governance Freeze
+STEP-12.2.x Traceability Verifications
+STEP-12.3 Implementation Authorization
+Critical Architecture Principles Frozen
+Repository = Source of Truth
+Existing Source → modify locals.tf only
+Existing Source → glue.tf never modified
+New Source → create locals.tf + glue.tf
+Repository validation before draft creation
+Repository validation before Kafka validation
+Kafka broker validation OUT OF SCOPE
+Schema Registry validation OUT OF SCOPE
+Topic validation only through confluent_minerva_dev/topics_<source>.tf
+One Session = One Active Draft
+Draft Workspace = Source of Truth
+Review Workspace = Authoritative before PR
+One Draft → One Commit → One PR
+Duplicate PR Protection
+Draft Freeze During PR Creation
+Immutable Snapshots
+Auto Snapshot on Every Mutation
+Snapshot Restore
+Session Recovery
+Draft Recovery
+Navigator Recovery
+ChatGPT-style Session Sidebar
+Every node = one responsibility
+OutOfScopeQuestionNode mandatory
+GPT-style conversational UX
+No wizard-style flow
+Derived values generated by agent
+Topic read-only (derived)
+User changes env/source/schema_grain instead
+Knowledge Layer Freeze
+RepositoryKnowledgeProvider
+KnowledgeBaseService
+RegistryLoader
+ValidationEngine
+ProvenanceService
+DerivedValueEngine
+
+Registries:
+
+validation_rules.json
+source_systems.json
+terraform_templates.json
+repo_patterns.json
+LangGraph Freeze
+
+Core flow:
+
+GitHubOAuthNode
+↓
+SessionManagerNode
+↓
+EnvironmentNode
+↓
+OperationNode
+↓
+IntentRouterNode
+↓
+SourceTypeNode
+↓
+SourceSystemNode
+↓
+SchemaGrainNode
+↓
+TopicValidationNode
+↓
+DuplicateJobValidationNode
+↓
+KnowledgeDerivationNode
+↓
+DraftWorkspaceNode
+↓
+ReviewWorkspaceNode
+↓
+TerraformValidationNode
+↓
+ApprovalNode
+↓
+PRCreationNode
+
+Validation Flow Freeze
+
+Draft
+↓
+Review
+↓
+Terraform Validation
+↓
+Review
+↓
+Approval
+↓
+PR
+
+Must-Have Features Captured
+GitHub OAuth
+Session Persistence
+Session Recovery
+Draft Workspace
+Multiple Jobs per Draft
+Multiple File Changes per Draft
+One Commit One PR
+Repository Navigator
+Terraform Validation
+Duplicate Job Validation
+Topic Validation
+Conflict Resolution
+Review Workspace
+PR Preview
+Session History
+ChatGPT-style UI
+Explicitly Not To Be Added
+Wizard style conversation
+collect_sink
+collect_workers
+confirm_derived
+show_summary
+Editable topic
+Kafka broker validation
+Schema registry validation
+Generic LLM wrapper architecture
+Implementation Process (Very Important)
+
+Main tumhare liye ab ye process lock kar raha hoon:
+
+For Every Future Step
+STEP-X
+
+1. Design Doc
+        ↓
+2. Review
+        ↓
+3. Freeze
+        ↓
+4. Verification Checklist
+        ↓
+5. PASS / FAIL
+        ↓
+6. Implementation
+        ↓
+7. Testing
+        ↓
+8. Evidence Collection
+        ↓
+9. Certification
+        ↓
+10. PASS / FAIL
+        ↓
+ONLY THEN
+NEXT STEP
+No Skipping Rule
+Implementation
+    ↓
+Testing
+    ↓
+Verification
+    ↓
+Certification
+    ↓
+Next Implementation
+
+Not:
+
+Implementation
+↓
+Implementation
+↓
+Implementation
